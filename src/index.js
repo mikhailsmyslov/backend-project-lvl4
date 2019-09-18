@@ -1,3 +1,3 @@
 import buildServer from './app';
 
-buildServer().listen(3000);
+buildServer().listen(process.env.PORT || 5000);
