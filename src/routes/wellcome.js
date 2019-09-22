@@ -1,5 +1,3 @@
 export default (router) => {
-  router.get('root', '/', (ctx) => {
-    ctx.body = 'Wellcome to the task manager!';
-  });
+  router.get('root', '/', (ctx) => ctx.render('wellcome/index'));
 };

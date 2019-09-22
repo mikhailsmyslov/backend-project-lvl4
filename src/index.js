@@ -1,3 +1,2 @@
-import buildServer from './app';
-
-buildServer().listen(process.env.PORT || 5000);
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';

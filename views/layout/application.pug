@@ -1,0 +1,27 @@
+doctype html
+html.h-100(lang="en")
+  head
+    title Task Manager
+    link(rel="icon" href="/favicon.png")
+    script(src='/assets/main.js')
+  body.d-flex.flex-column.h-100
+    header
+      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+        a.navbar-brand(href="/") Task Manager
+        button.navbar-toggler.collapsed(type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        #navbarCollapse.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            li.nav-item.active
+              a.nav-link(href='#')
+                | Home 
+                span.sr-only (current)
+            li.nav-item
+              a.nav-link(href='#') Link2
+    main.pt-5
+      block content
+    footer.footer.mt-auto.py-3.bg-dark.text-white-50
+      .container.text-center
+        small
+          Copyright &copy; Task Manager
+  

@@ -2,7 +2,7 @@ install:
 	npm install
 
 start:
-	npx babel-node src/index.js
+	npx babel-node src/bin/taskmanager.js
 
 build:
 	rm -rf dist
