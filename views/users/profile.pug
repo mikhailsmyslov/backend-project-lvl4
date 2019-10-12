@@ -1,0 +1,48 @@
+extends /layout/application.pug
+
+block content
+  h3.mb-4 Profile details
+  .row.mb-4
+    +avatar(user, 'medium').mr-3 
+    .dropright.mb-4.my-auto
+      h4#profileDropdownMenuLink.dropdown-toggle(data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')= user.fullName
+      .dropdown-menu(aria-labelledby='profileDropdownMenuLink')
+        h6.dropdown-header More actions
+        .dropdown-divider
+        a.dropdown-item.text-danger(href=urlFor('editUser') data-method= 'delete' data-confirm="Are you sure you want to delete your account? All personal data will be lost.") Delete account
+        .dropdown-divider
+        a.dropdown-item(href=urlFor('session') data-method= 'delete') Sign Out  
+
+  +formFor({ url: urlFor('editUser'), method: 'put' }).mb-5
+    .form-row.mb-3
+      .col-md-4
+        label.small.ml-2 First name
+        +input(formObj, 'firstName', { placeholder: 'First name' })
+      .col-md-4
+        label.small.ml-2  Last name
+        +input(formObj, 'lastName', { placeholder: 'Last name' })
+    .form-row.mb-3
+      .col-md-4.mb-3
+        label.small.ml-2 E-mail
+        +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
+    .form-row.mb-3
+      .col-md-2
+        +button({ type: 'submit', value: 'Save changes' }).btn.btn-sm.btn-outline-dark.btn-block 
+      .col-md-2
+        button.btn.btn-sm.btn-link.text-secondary(type='reset') Cancel       
+
+  h5.mb-3 Change password
+  +formFor({ url: urlFor('editUser'), method: 'patch' }).mb-5
+    .form-row.mb-3
+      .col-md-4
+        label.small.ml-2 Old password
+        +input(formObj, 'oldPassword', { type: 'password', placeholder: '' })
+        label.small.ml-2 New password
+        +input(formObj, 'newPassword', { type: 'password', placeholder: '' })
+        label.small.ml-2 Confirm password
+        +input(formObj, 'confirmPassword', { type: 'password', placeholder: '' })
+    .form-row.mb-3
+      .col-md-2
+        +button({ type: 'submit', value: 'Change password' }).btn.btn-sm.btn-outline-dark.btn-block 
+      .col-md-2
+        button.btn.btn-sm.btn-link.text-secondary(type='reset') Cancel

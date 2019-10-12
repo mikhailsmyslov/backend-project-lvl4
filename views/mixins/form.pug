@@ -1,0 +1,21 @@
+mixin formFor(options = {})
+  - const { url, method = 'get' } = options
+  - const isStandard = ['get', 'post'].includes(method)
+  form(action= url method= isStandard ? method : 'post')&attributes(attributes)
+    if (!isStandard)
+        input(name='_method' type='hidden' value= method)
+    block
+    
+mixin input(formObj, property, options = { type: 'text', placeholder: '' })
+  - const value = formObj.data[property] || ''
+  - const errors = formObj.errors[property]
+  - const { placeholder, type } = options
+  .form-group
+    input.form-control(class= (errors ? "is-invalid" : '') name= property type= (type) value= value placeholder= placeholder required)&attributes(attributes)
+    .invalid-feedback
+        = errors ? errors.map(({ message }) => message).join('. ') : ''
+
+mixin button(options = { type: 'submit', value: '' })
+  - const { type, value } = options
+  .form-group
+    button.btn(type= (type))&attributes(attributes)= value

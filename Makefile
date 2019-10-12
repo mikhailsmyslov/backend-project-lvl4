@@ -2,7 +2,7 @@ install:
 	npm install
 
 start:
-	npx babel-node src/bin/taskmanager.js
+	npx nodemon --exec gulp server
 
 build:
 	rm -rf dist
@@ -19,6 +19,9 @@ test:
 
 test-coverage:
 	npm test -- --coverage
+
+test-silent:
+	npm test --  --silent
 
 test-watch:
 	npm test -- --watch

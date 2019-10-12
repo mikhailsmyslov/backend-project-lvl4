@@ -1,0 +1,5 @@
+mixin avatar(user, iconSize)
+  - const { fullName, id } = user
+  - const iconSizes = { 'small': "24", 'medium': "48", 'large': "64" }
+  - const size = iconSizes[iconSize] || "28"
+    canvas.user-icon.rounded-circle(data-name=user.fullName width=size height=size)&attributes(attributes)

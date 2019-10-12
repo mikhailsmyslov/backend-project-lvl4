@@ -1,3 +1,3 @@
-export default (router) => {
-  router.get('root', '/', (ctx) => ctx.render('wellcome/index'));
+export default router => {
+  router.get('root', '/', ctx => ctx.render('wellcome'));
 };
