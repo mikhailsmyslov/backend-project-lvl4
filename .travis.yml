@@ -3,7 +3,7 @@ node_js:
   - node
 
 env:
-  SECRET_HMAC_KEY=secret
+  - SECRET_HMAC_KEY=secret
   global:
     - CC_TEST_REPORTER_ID=8d6db59d1cbc7ed9f0f70eb0e22f6df509a26f3ac5990467fcd9439748560844
 
