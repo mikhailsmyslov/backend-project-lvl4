@@ -5,7 +5,7 @@ start:
 	npx nodemon --exec gulp server
 
 build:
-	rm -rf dist
+	rm -rf public
 	npm run build
 
 publish:
