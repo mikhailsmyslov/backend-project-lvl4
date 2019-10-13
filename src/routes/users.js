@@ -23,6 +23,8 @@ export default router => {
 
     .post('users', '/users', async ctx => {
       console.log('Query has come');
+      console.log('Check if User model is available:');
+      console.log(User);
       const {
         request: { body: form }
       } = ctx;
