@@ -22,15 +22,23 @@ export default router => {
     })
 
     .post('users', '/users', async ctx => {
+      console.log('Query has come');
       const {
         request: { body: form }
       } = ctx;
+      console.log('Form has been parsed');
+      console.log(form);
       const user = await User.build(form);
+      console.log('User has been built:');
+      console.log(user);
       try {
+        console.log('Saving user');
         await user.save();
+        console.log('Saved, setting flash and perform redirect');
         ctx.flash('info', 'User has been created');
         ctx.redirect(router.url('root'));
       } catch (error) {
+        console.log(error);
         const formObj = buildFormObj(user, error);
         await ctx.render('users/profile', { formObj });
       }
