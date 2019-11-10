@@ -51,6 +51,7 @@
     "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
     "supertest": "^4.0.2",
     "terser-webpack-plugin": "^2.1.2",
+    "url-loader": "^2.2.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
   },
@@ -60,8 +61,13 @@
     "@babel/node": "^7.6.1",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.6.2",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "autoprefixer": "^9.6.1",
     "bootstrap": "^4.3.1",
+    "bootstrap-colorpicker": "^3.1.2",
+    "bootstrap-datepicker": "^1.9.0",
+    "bootstrap-select": "^1.13.12",
+    "bootstrap4-tagsinput": "git+https://github.com/Nodws/bootstrap4-tagsinput.git",
     "datatables.net-bs4": "^1.10.20",
     "debug": "^4.1.1",
     "dotenv": "^8.1.0",
@@ -89,6 +95,7 @@
     "pug": "^2.0.4",
     "rollbar": "^2.13.0",
     "sequelize": "^5.19.0",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^5.5.1",
+    "summernote": "^0.8.12"
   }
 }

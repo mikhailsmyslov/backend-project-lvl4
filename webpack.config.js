@@ -39,6 +39,7 @@ module.exports = {
           'postcss-loader'
         ]
       },
+      { test: /\.(woff|woff2|eot|ttf|svg)(\?.*)?$/, loader: 'url-loader?limit=100000' },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
@@ -61,6 +62,9 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'main.css'
+    }),
+    new webpack.DefinePlugin({
+      'require.specified': 'require.resolve'
     })
   ]
 };

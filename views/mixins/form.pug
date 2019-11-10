@@ -3,19 +3,53 @@ mixin formFor(options = {})
   - const isStandard = ['get', 'post'].includes(method)
   form(action= url method= isStandard ? method : 'post')&attributes(attributes)
     if (!isStandard)
-        input(name='_method' type='hidden' value= method)
+      input(name='_method' type='hidden' value= method)
     block
-    
-mixin input(formObj, property, options = { type: 'text', placeholder: '' })
+
+mixin input(formObj, property, options = {})
   - const value = formObj.data[property] || ''
+  - const errors = formObj.errors[property]
+  - const { placeholder = '', type = 'text', feedback = true } = options
+    .form-group
+      input.form-control(
+        class= errors ? "is-invalid" : ''
+        name= property
+        type= (type)
+        value= value
+        placeholder= placeholder
+        required
+        )&attributes(attributes)
+      .invalid-feedback
+        = errors ? errors.map(({ message }) => message).join('. ') : ''
+
+mixin datepicker(formObj, property, options = { type: 'text', placeholder: '' })
+  - const rawValue = formObj.data[property] || ''
+  - const formattedValue = rawValue ? moment(rawValue).format("MM/DD/YYYY") : ''
   - const errors = formObj.errors[property]
   - const { placeholder, type } = options
   .form-group
-    input.form-control(class= (errors ? "is-invalid" : '') name= property type= (type) value= value placeholder= placeholder required)&attributes(attributes)
+    input.datepicker.form-control.form-control-sm(class= (errors ? "is-invalid" : '') name= property type= (type) value= formattedValue placeholder= placeholder)&attributes(attributes)
     .invalid-feedback
-        = errors ? errors.map(({ message }) => message).join('. ') : ''
+      = errors ? errors.map(({ message }) => message).join('. ') : ''
+
+mixin textarea(formObj, property, options = { placeholder: '' })
+  - const value = formObj.data[property] || ''
+  - const errors = formObj.errors[property]
+  - const { placeholder } = options
+  .form-group
+    textarea.form-control(name= property type= 'text' placeholder= placeholder)&attributes(attributes)= value
 
 mixin button(options = { type: 'submit', value: '' })
   - const { type, value } = options
   .form-group
     button.btn(type= (type))&attributes(attributes)= value
+      block
+
+mixin filterSelect(list, property, formObj, options = { valueKey: 'id', nameKey: 'name' })
+  - const normalizedSelectedValues = _.flattenDeep([formObj.data[property]]).map(item => Number(item))
+  - const isSelectedOption = value => normalizedSelectedValues.includes(value)
+    block
+    select.selectpicker.form-control(name=property multiple data-live-search="true" title="All")&attributes(attributes)
+      each item in list
+        - const value = item[options.valueKey]
+        option(value= value selected= isSelectedOption(value))= item[options.nameKey]

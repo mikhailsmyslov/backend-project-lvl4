@@ -1,0 +1,12 @@
+- const { users, statuses, tasks, tags, filters } = filteredData
++formFor({ url: '', method: 'get' }).form-inline
+    +filterSelect(tags, 'tagId', filters).mr-2
+        i.fas.fa-tag.fa-xs.mr-2
+    +filterSelect(statuses, 'statusId', filters)(data-live-search=false).mr-2
+        i.fas.fa-minus-square.fa-xs.mr-2
+    +filterSelect(users, 'assigneeId', filters, { nameKey: 'fullName', valueKey: 'id' }).mr-2
+        i.fas.fa-users.fa-xs.mr-2
+    +filterSelect(users, 'creatorId', filters, { nameKey: 'fullName', valueKey: 'id'  }).mr-2
+        i.fas.fa-user-tie.fa-xs.mr-2                                                                   
+    +button({ type: 'submit', value: 'Search' }).badge.badge-pill.badge-dark
+    a.btn.badge.badge-pill.badge-light.border.border-dark(href='javascript:window.location.href = window.location.pathname').ml-2 Clear

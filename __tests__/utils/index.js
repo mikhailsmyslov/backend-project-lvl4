@@ -7,4 +7,7 @@ export const generateFakeUser = () => ({
   password: faker.internet.password()
 });
 
-export const generateFaketask = () => {};
+export const generateFaketask = () => ({
+  name: faker.lorem.sentence(),
+  description: faker.lorem.sentences()
+});

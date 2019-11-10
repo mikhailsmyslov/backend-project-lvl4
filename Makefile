@@ -25,3 +25,9 @@ test-silent:
 
 test-watch:
 	npm test -- --watch
+
+rebuild-dev-db:
+	npx sequelize db:drop --env development
+	npx sequelize db:create --env development
+	npx sequelize db:migrate --env development
+	npx sequelize db:seed:all --env development

@@ -1,0 +1,39 @@
+extends /layout/application.pug
+block content
+    h3 Customize task statuses
+    hr
+    .d-flex.flex-row.justify-content-between
+        .jumbotron
+            .d-flex.flex-column.align-items-start
+                p Task manager has the following predefined task statuses:
+                ul.list-group.ml-5
+                    li Active
+                    li Completed
+                    li Canceled
+                    li In progress
+                p.mt-5
+                    i These statuses can not be edited or deleted
+
+        .d-flex.flex-column.align-items-center
+            h6.mb-4 Available statuses
+            p.small.ml-2 Select status from a list
+            - const selectedStatusId = formObj ? formObj.data.id || null : null;
+            select.selectpicker.form-control-lg.mb-5(
+                name='statusId'
+                title= 'Click to check statuses'
+                onchange="window.location = this.options[this.selectedIndex].value;"
+                )
+                each status in statuses
+                    option(
+                        value= urlFor('showStatus', status.id)
+                        selected= status.id === selectedStatusId
+                        )= status.name          
+            a(href=urlFor('newStatus'))
+                i.fas.fa-plus.fa-lg.mr-2
+                | New Status
+ 
+        .d-flex.flex-column.align-items-center
+            if formObj
+                include statusDetails
+
+    hr
