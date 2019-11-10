@@ -2,6 +2,10 @@
   "name": "taskmanager",
   "version": "1.0.0",
   "description": "My fourth project on Hexlet",
+  "engines": {
+    "node": "12.9.0",
+    "npm": "6.11.2"
+  },
   "jest": {
     "testEnvironment": "node",
     "verbose": true,
