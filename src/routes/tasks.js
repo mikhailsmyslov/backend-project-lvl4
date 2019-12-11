@@ -78,6 +78,21 @@ export default router => {
       ctx.state.currentPath = ctx.path;
       await next();
     })
+    .use('/tasks', async (ctx, next) => {
+      ctx.state.currentPath = ctx.path;
+      await next();
+    })
+    .use('/tasks', async (ctx, next) => {
+      const form = ctx.request.body;
+      if (!form) {
+        await next();
+        return;
+      }
+      Object.entries(form).forEach(([key, value]) => {
+        if (value === '') form[key] = null;
+      });
+      await next();
+    })
 
     .get('tasks', '/tasks', async ctx => ctx.render('tasks'))
 

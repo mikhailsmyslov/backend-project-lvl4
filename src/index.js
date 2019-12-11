@@ -53,8 +53,8 @@ $('.input-daterange').datepicker({
   todayHighlight: true
 });
 const calculateDuration = () => {
-  const startDate = $('#startDate').datepicker('getDate');
-  const endDate = $('#endDate').datepicker('getDate');
+  const startDate = $('[name="startDate"]').datepicker('getDate');
+  const endDate = $('[name="endDate"]').datepicker('getDate');
   const timeDiff = moment(endDate).diff(startDate, 'days');
   const duration = timeDiff >= 0 ? `${timeDiff + 1} d` : '---';
   $('#duration').text(duration);

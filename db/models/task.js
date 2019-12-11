@@ -11,12 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       startDate: {
         type: DataTypes.DATE,
+        allowNull: true,
         validate: {
           isDate: true
         }
       },
       endDate: {
         type: DataTypes.DATE,
+        allowNull: true,
         validate: {
           isDate: true
         }
