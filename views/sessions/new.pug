@@ -2,10 +2,10 @@ extends /layout/application.pug
 include /mixins/form.pug
 
 block content
-    .row.justify-content-md-center
-        .col-md-4
-            h3.text-center Sign In
-            +formFor({ url: urlFor('session'), method: 'post' })
-                +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
-                +input(formObj, 'password', { type: 'password', placeholder: 'Enter your password' })
-                +button({ type: 'submit', value: 'Submit' }).btn-lg.btn-dark.btn-block
+  .row.justify-content-md-center
+    .col-md-4
+      h3.text-center Sign In
+      +formFor({ url: urlFor('session'), method: 'post' })
+        +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
+        +input(formObj, 'password', { type: 'password', placeholder: 'Enter your password' })
+        +button({ type: 'submit', value: 'Submit' }).btn-lg.btn-dark.btn-block

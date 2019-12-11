@@ -1,12 +1,12 @@
 extends /layout/application.pug
 
 block content
-    .row.justify-content-md-center
-        .col-md-4
-            h3.text-center Sign Up
-            +formFor({ url: urlFor('users'), method: 'post' })
-                +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
-                +input(formObj, 'firstName', { placeholder: 'First name' })
-                +input(formObj, 'lastName', { placeholder: 'Last name' })
-                +input(formObj, 'password', { type: 'password', placeholder: 'Enter your password' })
-                +button({ type: 'submit', value: 'Submit' }).btn-lg.btn-dark.btn-block
+  .row.justify-content-md-center
+    .col-md-4
+      h3.text-center Sign Up
+      +formFor({ url: urlFor('users'), method: 'post' })
+        +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
+        +input(formObj, 'firstName', { placeholder: 'First name' })
+        +input(formObj, 'lastName', { placeholder: 'Last name' })
+        +input(formObj, 'password', { type: 'password', placeholder: 'Enter your password' })
+        +button({ type: 'submit', value: 'Submit' }).btn-lg.btn-dark.btn-block

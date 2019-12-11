@@ -6,6 +6,11 @@ import encrypt from '../../lib/secure';
 
 export default router => {
   router
+    .use('/users', async (ctx, next) => {
+      ctx.state.currentPath = ctx.path;
+      await next();
+    })
+
     .get('users', '/users', async ctx => {
       const users = await User.findAll();
       await ctx.render('users', { users });
@@ -19,6 +24,13 @@ export default router => {
     .get('editUser', '/users/profile', ensureAuth, async ctx => {
       const formObj = buildFormObj(ctx.state.user);
       await ctx.render('users/profile', { formObj });
+    })
+
+    .get('showUser', '/users/:id', ensureAuth, async ctx => {
+      const { id } = ctx.params;
+      const userToShow = await User.findByPk(id);
+      const users = await User.findAll();
+      await ctx.render('users', { users, userToShow });
     })
 
     .post('users', '/users', async ctx => {

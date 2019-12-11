@@ -1,44 +1,59 @@
 h3 Task Details
-- const isNewTask = currentPath === urlFor('newTask');
-- const method = isNewTask ? 'post' : 'patch';
+- const isNewTask = currentPath === urlFor("newTask");
+- const method = isNewTask ? "post" : "patch";
 - const selectedTaskId = isNewTask ? null : formObj.data.id;
-- const url = isNewTask ? urlFor('newTask') : urlFor('updateTask', selectedTaskId)
+- const url = isNewTask ? urlFor("newTask") : urlFor("updateTask", selectedTaskId);
 
 +formFor({ url, method })
-    +input(formObj, 'name', { placeholder: 'Enter task title' })
-    .row
-        .col.w-25
-            +filterSelect(statuses, 'statusId', formObj)(multiple=false data-live-search=false data-width='100%').mr-2
-        .col.w-25                      
-            +filterSelect(users, 'assigneeId', formObj, { nameKey: 'fullName', valueKey: 'id' })(data-width='100%' title='Nobody').mr-2
-        .col.w-50
-            p.small.float-right.mb-0= creator.fullName
-            +avatar(creator, 'small').rounded-100.mx-2.float-right.mb-0
-            p.small.float-right.mb-0 by:
-            if !isNewTask
-                p.small.float-right=`on: ${moment(formObj.data.createdAt).format("MM-DD-YYYY")}`
-        .d-flex.flex-row.justify-content-between.input-group.input-daterange
-            .d-flex.flex-row.mx-2
-                i.fas.fa-hourglass-start.fa-sm.my-2.mx-2
-                +datepicker(formObj, 'startDate', { placeholder: 'Start date'})(id='startDate')
-            .d-flex.flex-row.mx-2
-                i.fas.fa-hourglass-end.fa-sm.my-2.mx-2
-                +datepicker(formObj, 'endDate', { placeholder: 'End date'})(id='endDate')
-            .d-flex.flex-row.mx-3.my-2
-                p.small.mr-2 Duration:
-                p#duration.small= '---'
+  +input(formObj, 'name', { placeholder: 'Enter task title' })
+  .row.mb-3
+    .col.w-25
+      label.small.mb-1
+        | Status:  
+      +filterSelect(statuses, 'statusId', formObj)(
+        multiple=false,
+        data-live-search=false,
+        data-width='100%'
+      ).mr-2
+    .col.w-25
+      label.small.mb-1
+        | Assigned to:  
+      +filterSelect(users, 'assigneeId', formObj, { nameKey: 'fullName', valueKey: 'id' })(
+        data-width='100%',
+        title='Nobody'
+      ).mr-2
+    .col.w-50.h-100.align-self-center
+      p.small.float-right.mb-0= creator.fullName
+      +avatar(creator, 'small').rounded-100.mx-2.float-right.mb-0
+      p.small.float-right.mb-0 by:
+      if !isNewTask
+        p.small.float-right.mb-0= `on: ${moment(formObj.data.createdAt).format("MM-DD-YYYY")}`
+  .row
+    .d-flex.flex-row.justify-content-between.input-group.input-daterange
+      .d-flex.flex-row.mx-2
+        i#startDate.fas.fa-hourglass-start.fa-sm.my-2.mx-2
+        +datepicker(formObj, 'startDate', { placeholder: 'Start date'})
+      .d-flex.flex-row.mx-2
+        i#endDate.fas.fa-hourglass-end.fa-sm.my-2.mx-2
+        +datepicker(formObj, 'endDate', { placeholder: 'End date'})
+      .d-flex.flex-row.mx-3.my-2
+        p.small.mr-2 Duration:
+        p#duration.small= "---"
 
-    +textarea(formObj, 'description', { placeholder: 'Enter task description' }).summernote(rows='12')
-    .row
-        .col-mx-auto.ml-4
-            i.fas.fa-tag.fa-lg.mt-2
-        .col   
-            +input(formObj, 'tags', { placeholder: 'Enter tags' })(required=false data-role="tagsinput").tags-input                  
-    .row
-        .col
-            +button({ type: 'submit', value: 'Save' }).btn-outline-dark
-                i.fas.fa-save.ml-2
-        if !isNewTask    
-            .col
-                a.btn.btn-outline-dark.float-right(href=urlFor('deleteTask', selectedTaskId) data-method='delete')
-                    i.fas.fa-trash-alt
+  +textarea(formObj, 'description', { placeholder: 'Enter task description' }).summernote(rows='12')
+  .row
+    .col-mx-auto.ml-4
+      i.fas.fa-tag.fa-lg.mt-2
+    .col 
+      +input(formObj, 'tags', { placeholder: 'Enter tags' })(required=false, data-role='tagsinput').tags-input 
+  .row
+    .col
+      +button({ type: 'submit', value: 'Save' }).btn-outline-dark
+        i.fas.fa-save.ml-2
+    if !isNewTask
+      .col
+        a.btn.btn-outline-dark.float-right(
+          href=urlFor("deleteTask", selectedTaskId),
+          data-method='delete'
+        )
+          i.fas.fa-trash-alt

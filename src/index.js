@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import moment from 'moment';
+import _ from 'lodash';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'jquery-ujs';
@@ -66,4 +67,16 @@ $('.datepicker')
 $('#colorpicker').colorpicker();
 $('#colorpicker').on('colorpickerChange colorpickerCreate', event => {
   $('#colorpicker-preview').css('background-color', event.color.toString());
+});
+
+const singleSelectValues = ['all', 'unassigned', 'me'];
+$('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
+  const { selectedOptions } = target;
+  const selectedValues = [...selectedOptions].map(opt => opt.value);
+  const intersection = _.intersection(singleSelectValues, selectedValues);
+  if (!_.isEmpty(intersection)) {
+    $(target)
+      .val(target[clickedIndex].value)
+      .selectpicker('refresh');
+  }
 });

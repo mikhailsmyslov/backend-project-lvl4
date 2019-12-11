@@ -1,12 +1,47 @@
-- const { users, statuses, tasks, tags, filters } = filteredData
-+formFor({ url: '', method: 'get' }).form-inline
-    +filterSelect(tags, 'tagId', filters).mr-2
-        i.fas.fa-tag.fa-xs.mr-2
-    +filterSelect(statuses, 'statusId', filters)(data-live-search=false).mr-2
-        i.fas.fa-minus-square.fa-xs.mr-2
-    +filterSelect(users, 'assigneeId', filters, { nameKey: 'fullName', valueKey: 'id' }).mr-2
-        i.fas.fa-users.fa-xs.mr-2
-    +filterSelect(users, 'creatorId', filters, { nameKey: 'fullName', valueKey: 'id'  }).mr-2
-        i.fas.fa-user-tie.fa-xs.mr-2                                                                   
-    +button({ type: 'submit', value: 'Search' }).badge.badge-pill.badge-dark
-    a.btn.badge.badge-pill.badge-light.border.border-dark(href='javascript:window.location.href = window.location.pathname').ml-2 Clear
+- const { users, statuses, tasks, tags, filters } = filteredData;
+- const allSelectOption = { value: "all", name: "All" };
+- const unassignedSelectOption = { value: "unassigned", name: "Unassigned" };
+- const meSelectOptions = { value: "me", name: "Me" };
++formFor({ url: '', method: 'get' })
+  .row
+    .form-group.w-25
+      i.fas.fa-tag.fa-xs.mr-2
+      label.small
+        | By tags
+      +filterSelect(tags, 'tagId', filters, { additionalOptions: [allSelectOption] })(
+        data-width='90%',
+        title='By tag'
+      ).mr-2
+    .form-group.w-25
+      i.fas.fa-minus-square.fa-xs.mr-2
+      label.small
+        | By status      
+      +filterSelect(statuses, 'statusId', filters, { additionalOptions: [allSelectOption] })(
+        data-live-search=false,
+        data-width='90%',
+        title='By status'
+      ).mr-2
+    .form-group.w-25
+      i.fas.fa-users.fa-xs.mr-2
+      label.small
+        | By assignees     
+      - const additionalOptions = [{ value: "unassigned", name: "Unassigned" }];
+      +filterSelect(users, 'assigneeId', filters, { nameKey: 'fullName', valueKey: 'id', additionalOptions: [allSelectOption, unassignedSelectOption, meSelectOptions] })(
+        data-width='90%',
+        title='Assigned To'
+      ).mr-2
+    .form-group.w-25
+      i.fas.fa-user-tie.fa-xs.mr-2
+      label.small
+        | By creator      
+      +filterSelect(users, 'creatorId', filters, { nameKey: 'fullName', valueKey: 'id', additionalOptions: [allSelectOption, meSelectOptions]})(
+        data-width='90%'
+        title="Created By"
+      ).mr-2
+  .mr-4
+    .row.justify-content-end
+        +button({ type: 'submit', value: 'Search' }).badge.badge-pill.badge-dark
+        .form-group
+          a.btn.badge.badge-pill.badge-light.border.border-dark(
+            href='javascript:window.location.href = window.location.pathname'
+          ).ml-2 Clear

@@ -1,0 +1,12 @@
+h3.mb-5.ml-2.text-center User Details
+- const user = userToShow
+.col.align-self-center
+    .row.ml-1.mb-5
+        +avatar(user, 'large').mr-4
+        h4.align-self-center= user.fullName
+    .mb-3
+        h5 Email:
+        p= user.email
+    .mb-3
+        h5 Registered:
+        p= moment(user.createdAt).format("YYYY-MM-DD [at] HH:mm")

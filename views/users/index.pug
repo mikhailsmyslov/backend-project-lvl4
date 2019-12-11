@@ -1,15 +1,21 @@
 extends /layout/application.pug
 
 block content
-  table.table.table-sm.table-striped.table-bordered.data-table
-    thead
-      tr
-        th Full Name
-        th Email
-        th Created At
-    tbody
-      each user in users
-        tr
-          td= user.fullName
-          td= user.email
-          td= moment(user.createdAt).format("YYYY-MM-DD [at] HH:mm")
+  .row
+    .col.mt-3
+      - const dataTableClass = currentPath === urlFor("users") ? "data-table" : "data-table-scroll-Y";
+      table.table.table-sm.table-striped.table-bordered.table-hover(class=dataTableClass)
+        thead
+          tr
+            th Full Name
+            th Email
+            th Created At
+        tbody
+          each user in users
+            tr(onclick=`window.location='${urlFor("showUser", user.id)}'`)
+              td= user.fullName
+              td= user.email
+              td= moment(user.createdAt).format("YYYY-MM-DD [at] HH:mm")
+    if userToShow
+      .col-4
+        include userDetails

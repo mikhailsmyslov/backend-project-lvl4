@@ -1,5 +1,5 @@
 import ensureAuth from '../../lib/ensureAuth';
-import { User, Task, Status, Tag } from '../../db/models';
+import { User, Task, Status, Tag, Sequelize } from '../../db/models';
 import buildFormObj from '../../lib/formObjectBuilder';
 
 const getTagsInstances = async tagsString => {
@@ -10,38 +10,63 @@ const getTagsInstances = async tagsString => {
 };
 
 const applyTaskFilters = async (ctx, next) => {
-  const filters = {
-    creatorId: null,
-    assigneeId: null,
-    statusId: null,
-    tagId: null,
-    ...ctx.request.query
+  const { creatorId, assigneeId, statusId, tagId } = ctx.request.query;
+  const { user } = ctx.state;
+
+  const getFilterValue = (query, defaultValue = null) => {
+    switch (query) {
+      case undefined:
+        return defaultValue;
+      case 'all':
+        return null;
+      case 'me':
+        return { id: user.id };
+      case 'unassigned':
+        return null;
+      default:
+        return { id: query };
+    }
   };
+
   const tasks = await Task.findAll({
     include: [
       {
         association: 'Status',
-        where: filters.statusId ? { id: filters.statusId } : null
+        where: getFilterValue(statusId, 1)
       },
       {
         association: 'Assignees',
-        where: filters.assigneeId ? { id: filters.assigneeId } : null
+        where: getFilterValue(assigneeId, user.id)
       },
       {
         association: 'Creator',
-        where: filters.creatorId ? { id: filters.creatorId } : null
+        where: getFilterValue(creatorId)
       },
       {
         association: 'Tags',
-        where: filters.tagId ? { id: filters.tagId } : null
+        where: getFilterValue(tagId)
       }
-    ]
+    ],
+    where:
+      assigneeId === 'unassigned'
+        ? {
+            id: {
+              [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')]
+            }
+          }
+        : null
   });
   const users = await User.findAll();
   const statuses = await Status.findAll();
   const tags = await Tag.findAll();
   ctx.state.query = ctx.request.query;
-  ctx.state.filteredData = { users, statuses, tasks, tags, filters: buildFormObj(filters) };
+  ctx.state.filteredData = {
+    users,
+    statuses,
+    tasks,
+    tags,
+    filters: buildFormObj({ statusId: 1, assigneeId: user.id, ...ctx.request.query })
+  };
   await next();
 };
 
@@ -51,17 +76,6 @@ export default router => {
     .use('/tasks', applyTaskFilters)
     .use('/tasks', async (ctx, next) => {
       ctx.state.currentPath = ctx.path;
-      await next();
-    })
-    .use('/tasks', async (ctx, next) => {
-      const form = ctx.request.body;
-      if (!form) {
-        await next();
-        return;
-      }
-      Object.entries(form).forEach(([key, value]) => {
-        if (value === '') form[key] = null;
-      });
       await next();
     })
 
@@ -107,7 +121,7 @@ export default router => {
       try {
         await task.update({ ...form });
         await task.setTags(tags);
-        await task.setAssignees(form.assigneeId || []);
+        await task.setAssignees(form.assigneeId);
         ctx.flash('info', 'Task has been updated');
         ctx.redirect(router.url('showTask', task.id));
       } catch (error) {
