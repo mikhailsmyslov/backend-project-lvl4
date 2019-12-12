@@ -33,7 +33,8 @@ mixin datepicker(formObj, property, options = { type: 'text', placeholder: '' })
       name=property,
       type=type,
       value=formattedValue,
-      placeholder=placeholder
+      placeholder=placeholder,
+      autocomplete="off",
     )&attributes(attributes)
     .invalid-feedback
       = errors ? errors.map(({ message }) => message).join(". ") : ""

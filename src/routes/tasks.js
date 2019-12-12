@@ -9,14 +9,19 @@ const getTagsInstances = async tagsString => {
   return tagList.map(([tagInstance]) => tagInstance);
 };
 
-const applyTaskFilters = async (ctx, next) => {
-  const { creatorId, assigneeId, statusId, tagId } = ctx.request.query;
-  const { user } = ctx.state;
+const unAssignedTasksIds = {
+  [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')]
+};
 
-  const getFilterValue = (query, defaultValue = null) => {
-    switch (query) {
+const applyTaskFilters = async (ctx, next) => {
+  const { query } = ctx.request;
+  const user = ctx.state;
+  const { creatorId, assigneeId, statusId, tagId } = query;
+
+  const buildWhereCondition = (filterValue, defaultValue) => {
+    switch (filterValue) {
       case undefined:
-        return defaultValue;
+        return defaultValue ? { id: defaultValue } : null;
       case 'all':
         return null;
       case 'me':
@@ -24,49 +29,25 @@ const applyTaskFilters = async (ctx, next) => {
       case 'unassigned':
         return null;
       default:
-        return { id: query };
+        return { id: filterValue };
     }
   };
 
   const tasks = await Task.findAll({
     include: [
-      {
-        association: 'Status',
-        where: getFilterValue(statusId, 1)
-      },
-      {
-        association: 'Assignees',
-        where: getFilterValue(assigneeId, user.id)
-      },
-      {
-        association: 'Creator',
-        where: getFilterValue(creatorId)
-      },
-      {
-        association: 'Tags',
-        where: getFilterValue(tagId)
-      }
+      { association: 'Status', where: buildWhereCondition(statusId, 1) },
+      { association: 'Assignees', where: buildWhereCondition(assigneeId) },
+      { association: 'Creator', where: buildWhereCondition(creatorId) },
+      { association: 'Tags', where: buildWhereCondition(tagId) }
     ],
-    where:
-      assigneeId === 'unassigned'
-        ? {
-            id: {
-              [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')]
-            }
-          }
-        : null
+    where: assigneeId === 'unassigned' ? { id: unAssignedTasksIds } : null
   });
   const users = await User.findAll();
   const statuses = await Status.findAll();
   const tags = await Tag.findAll();
-  ctx.state.query = ctx.request.query;
-  ctx.state.filteredData = {
-    users,
-    statuses,
-    tasks,
-    tags,
-    filters: buildFormObj({ statusId: 1, assigneeId: user.id, ...ctx.request.query })
-  };
+  const filters = buildFormObj({ statusId: 1, ...query });
+  ctx.state.query = query;
+  ctx.state.filteredData = { users, statuses, tasks, tags, filters };
   await next();
 };
 
@@ -74,10 +55,6 @@ export default router => {
   router
     .use('/tasks', ensureAuth)
     .use('/tasks', applyTaskFilters)
-    .use('/tasks', async (ctx, next) => {
-      ctx.state.currentPath = ctx.path;
-      await next();
-    })
     .use('/tasks', async (ctx, next) => {
       ctx.state.currentPath = ctx.path;
       await next();
@@ -104,7 +81,7 @@ export default router => {
     .get('showTask', '/tasks/:id', async ctx => {
       const task = await Task.findByPk(ctx.params.id);
       const taskTags = await task.getTags();
-      const creator = await task.getCreator();
+      const creator = await task.getCreator({ scope: null });
       const assignees = await task.getAssignees();
       const assigneeId = assignees.map(({ id }) => id);
       const taskTagsString = taskTags.map(t => t.name).join();

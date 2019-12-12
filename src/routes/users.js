@@ -105,8 +105,10 @@ export default router => {
     })
 
     .delete('editUser', '/users/profile', ensureAuth, async ctx => {
-      const { id } = ctx.state.user;
-      await User.destroy({ where: { id } });
+      const { user } = ctx.state;
+      const { id } = user;
+      await User.update({ state: 'deleted' }, { where: { id } });
+      await user.setAssignedTasks([]);
       ctx.flash('info', 'Account has been successfully deleted');
       ctx.logout();
       ctx.redirect('/');

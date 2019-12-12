@@ -39,18 +39,37 @@ export default (sequelize, DataTypes) => {
         validate: {
           len: [1, +Infinity]
         }
+      },
+      state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'active'
       }
     },
     {
       getterMethods: {
         fullName() {
           return `${this.firstName} ${this.lastName}`;
+        },
+        isActive() {
+          return this.state === 'active';
+        }
+      },
+      defaultScope: {
+        where: {
+          state: 'active'
         }
       }
     }
   );
   User.associate = models => {
     User.hasMany(models.Task, { as: 'CreatedTasks', foreignKey: 'creatorId' });
+    User.belongsToMany(models.Task, {
+      as: 'AssignedTasks',
+      through: 'TaskAssignees',
+      foreignKey: 'assigneeId',
+      otherKey: 'taskId'
+    });
   };
   return User;
 };

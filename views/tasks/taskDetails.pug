@@ -5,7 +5,7 @@ h3 Task Details
 - const url = isNewTask ? urlFor("newTask") : urlFor("updateTask", selectedTaskId);
 
 +formFor({ url, method })
-  +input(formObj, 'name', { placeholder: 'Enter task title' })
+  +input(formObj, 'name', { placeholder: 'Enter task title' })(autocomplete="off")
   .row.mb-3
     .col.w-25
       label.small.mb-1
