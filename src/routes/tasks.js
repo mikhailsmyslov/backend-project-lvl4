@@ -15,7 +15,7 @@ const unAssignedTasksIds = {
 
 const applyTaskFilters = async (ctx, next) => {
   const { query } = ctx.request;
-  const user = ctx.state;
+  const { user } = ctx.state;
   const { creatorId, assigneeId, statusId, tagId } = query;
 
   const buildWhereCondition = (filterValue, defaultValue) => {
