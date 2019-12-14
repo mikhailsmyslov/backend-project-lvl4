@@ -4,17 +4,17 @@ export const generateFakeUser = () => ({
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email(),
-  password: faker.internet.password()
+  password: faker.internet.password(),
+  state: 'active'
 });
 
 export const generateFaketask = () => ({
   name: faker.lorem.sentence(),
-  description: faker.lorem.sentences(),
-  state: 'active'
+  description: faker.lorem.sentences()
 });
 
 export const generateFakeStatus = () => ({
   name: faker.lorem.word(),
   color: 'white',
-  protected: 'custom'
+  state: 'custom'
 });
