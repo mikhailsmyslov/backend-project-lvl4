@@ -9,7 +9,8 @@ export const generateFakeUser = () => ({
 
 export const generateFaketask = () => ({
   name: faker.lorem.sentence(),
-  description: faker.lorem.sentences()
+  description: faker.lorem.sentences(),
+  state: 'active'
 });
 
 export const generateFakeStatus = () => ({
