@@ -1,6 +1,6 @@
 - const isNewStatus = currentPath === urlFor("newStatus");
 - const method = isNewStatus ? "post" : "patch";
-- const url = isNewStatus ? urlFor("newStatus") : urlFor("updateStatus", selectedStatusId);
+- const url = isNewStatus ? urlFor("createStatus") : urlFor("updateStatus", selectedStatusId);
 h6.mb-4 Status details
 +formFor({ url, method }) 
   .form-group.mb-4

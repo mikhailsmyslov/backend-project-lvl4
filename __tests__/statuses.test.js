@@ -23,7 +23,7 @@ beforeEach(async () => {
   customStatus = await Status.create({ ...generateFakeStatus() });
   server = await app().listen();
   authenticatedAgent = request.agent(server);
-  await authenticatedAgent.post('/session').send(registeredUser);
+  await authenticatedAgent.post(router.url('createSession')).send(registeredUser);
 });
 
 afterEach(async () => {
@@ -37,7 +37,7 @@ test('Protected routes', async () => {
 
 test('Create status', async () => {
   const status = generateFakeStatus();
-  const res = await authenticatedAgent.post(router.url('newStatus')).send(status);
+  const res = await authenticatedAgent.post(router.url('createStatus')).send(status);
   const { count } = await Status.findAndCountAll({ where: { name: status.name } });
   expect(res.status).toBe(302);
   expect(count).not.toBe(0);

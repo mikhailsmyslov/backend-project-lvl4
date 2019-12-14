@@ -89,7 +89,7 @@ export default router => {
       await ctx.render('tasks', { formObj, creator });
     })
 
-    .post('newTask', '/tasks/new', async ctx => {
+    .post('createTask', '/tasks', async ctx => {
       const form = ctx.request.body;
       const task = await Task.build({ creatorId: ctx.state.user.id, ...form });
       const tags = await getTagsInstances(form.tags);

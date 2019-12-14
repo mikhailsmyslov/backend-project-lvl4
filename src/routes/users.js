@@ -33,7 +33,7 @@ export default router => {
       await ctx.render('users', { users, userToShow });
     })
 
-    .post('users', '/users', async ctx => {
+    .post('createUser', '/users', async ctx => {
       const {
         request: { body: form }
       } = ctx;

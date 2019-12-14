@@ -35,7 +35,7 @@ beforeEach(async () => {
   );
   server = await app().listen();
   authenticatedAgent = request.agent(server);
-  await authenticatedAgent.post('/session').send(registeredUser);
+  await authenticatedAgent.post(router.url('createSession')).send(registeredUser);
 });
 
 afterEach(async () => {
@@ -51,7 +51,7 @@ test('Protected routes', async () => {
 
 test('Create task', async () => {
   const task = generateFaketask();
-  const res = await authenticatedAgent.post(router.url('newTask')).send(task);
+  const res = await authenticatedAgent.post(router.url('createTask')).send(task);
   const { count } = await Task.findAndCountAll({ where: { name: task.name } });
   expect(res.status).toBe(302);
   expect(count).not.toBe(0);

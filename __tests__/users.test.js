@@ -22,7 +22,7 @@ beforeEach(async () => {
   await User.create(registeredUser, { logging: false });
   server = await app().listen();
   authenticatedAgent = request.agent(server);
-  await authenticatedAgent.post('/session').send(registeredUser);
+  await authenticatedAgent.post(router.url('createSession')).send(registeredUser);
 });
 
 afterEach(async () => {
@@ -34,7 +34,7 @@ describe('Authentication is not required', () => {
     const user = generateFakeUser();
     const res = await request
       .agent(server)
-      .post(router.url('users'))
+      .post(router.url('createUser'))
       .send(user);
     const { count } = await User.findAndCountAll({ where: { email: user.email } });
     expect(res.status).toBe(302);
@@ -50,11 +50,11 @@ describe('Authentication is not required', () => {
   test('User sign in', async () => {
     const successRes = await request
       .agent(server)
-      .post(router.url('session'))
+      .post(router.url('createSession'))
       .send(registeredUser);
     const failRes = await request
       .agent(server)
-      .post(router.url('session'))
+      .post(router.url('createSession'))
       .send(generateFakeUser());
     expect(successRes.get('location')).toEqual(router.url('root'));
     expect(failRes.get('location')).not.toEqual(router.url('root'));
@@ -106,7 +106,7 @@ describe('Authentication required', () => {
 
   test('User log out', async () => {
     const beforeLogOut = await authenticatedAgent.get(router.url('root'));
-    await authenticatedAgent.delete(router.url('session'));
+    await authenticatedAgent.delete(router.url('deleteSession'));
     const afterLogout = await authenticatedAgent.get(router.url('root'));
     expect(beforeLogOut.text).toEqual(expect.not.stringContaining('avatar'));
     expect(afterLogout).toEqual(expect.not.stringContaining('avatar'));

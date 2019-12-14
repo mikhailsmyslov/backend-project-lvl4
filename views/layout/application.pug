@@ -33,7 +33,7 @@ html.h-100(lang="en")
                 a.dropdown-item(href=urlFor('editUser')) Edit Profile
                 a.dropdown-item(href=urlFor('statuses')) Customize Statuses
                 .dropdown-divider
-                a.dropdown-item(href=urlFor('session') data-method= 'delete') Sign Out
+                a.dropdown-item(href=urlFor("deleteSession"), data-method='delete') Sign Out
           else
             .btn-group.mr-2       
               a.btn.btn-outline-light(href=urlFor('newSession') role='button') Sign In

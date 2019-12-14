@@ -10,7 +10,7 @@ export default router => {
     })
 
     .post(
-      'session',
+      'createSession',
       '/session',
       passport.authenticate('local', {
         successRedirect: '/',
@@ -20,7 +20,7 @@ export default router => {
       })
     )
 
-    .delete('session', '/session', ensureAuth, ctx => {
+    .delete('deleteSession', '/session', ensureAuth, ctx => {
       ctx.logout();
       ctx.redirect('/');
     });

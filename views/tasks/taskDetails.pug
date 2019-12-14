@@ -2,7 +2,7 @@ h3 Task Details
 - const isNewTask = currentPath === urlFor("newTask");
 - const method = isNewTask ? "post" : "patch";
 - const selectedTaskId = isNewTask ? null : formObj.data.id;
-- const url = isNewTask ? urlFor("newTask") : urlFor("updateTask", selectedTaskId);
+- const url = isNewTask ? urlFor("createTask") : urlFor("updateTask", selectedTaskId);
 
 +formFor({ url, method })
   +input(formObj, 'name', { placeholder: 'Enter task title' })(autocomplete="off")

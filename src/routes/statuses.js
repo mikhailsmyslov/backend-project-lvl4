@@ -39,7 +39,7 @@ export default router => {
       await ctx.render('statuses', { formObj });
     })
 
-    .post('newStatus', '/statuses/new', async ctx => {
+    .post('createStatus', '/statuses', async ctx => {
       const form = ctx.request.body;
       const status = await Status.build({ ...form });
       try {

@@ -19,7 +19,7 @@ block content
           data-confirm='Are you sure you want to delete your account? All personal data will be lost.'
         ) Delete account
         .dropdown-divider
-        a.dropdown-item(href=urlFor("session"), data-method='delete') Sign Out
+        a.dropdown-item(href=urlFor("deleteSession"), data-method='delete') Sign Out
 
   +formFor({ url: urlFor('editUser'), method: 'put' }).mb-5
     .form-row.mb-3
