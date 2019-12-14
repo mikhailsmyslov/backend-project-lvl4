@@ -16,7 +16,7 @@ html.h-100(lang="en")
           span.navbar-toggler-icon
         #navbarCollapse.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
-            li.nav-item.active
+            li.nav-item
               a.nav-link(href=urlFor('users'))
                 | Users 
                 span.sr-only (current)
@@ -51,6 +51,8 @@ html.h-100(lang="en")
         block content
     footer.footer.mt-auto.py-3.bg-dark.text-white-50
       .container.text-center
-        small
-          Copyright &copy; Task Manager  
+        small.mr-2
+          Copyright &copy; Task Manager
+        a(href='https://github.com/mikhailsmyslov/backend-project-lvl4').icon-link
+          i.fab.fa-github.fa-lg
   script(src='/assets/main.js')

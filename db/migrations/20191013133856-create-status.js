@@ -23,6 +23,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'custom'
       }
     });
   },

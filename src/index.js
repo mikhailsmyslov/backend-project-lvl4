@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import moment from 'moment';
-import _ from 'lodash';
+import { intersection, isEmpty } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'jquery-ujs';
@@ -9,13 +9,15 @@ import 'datatables.net-bs4';
 import '../vendor/pictures/favicon.png';
 import '../vendor/pictures/logo.png';
 import '../vendor/plugins/katweKibsletterAvatarjs';
-import '@fortawesome/fontawesome-free/js/all';
+import '@fortawesome/fontawesome-free/js/all.min';
 import 'bootstrap4-tagsinput/tagsinput';
 import 'bootstrap4-tagsinput/tagsinput.css';
 import 'bootstrap-select/dist/js/bootstrap-select.min';
 import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 import 'summernote/dist/summernote-bs4.css';
 import '../vendor/css/summernote-z-index-fix.css';
+import '../vendor/css/icon-link.css';
+import '../vendor/css/bs-select-item-aligment-fix.css';
 import 'summernote/dist/summernote-bs4.min';
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css';
 import 'bootstrap-datepicker';
@@ -64,19 +66,19 @@ $('.datepicker')
   .datepicker()
   .on('changeDate', calculateDuration);
 
-$('#colorpicker').colorpicker();
-$('#colorpicker').on('colorpickerChange colorpickerCreate', event => {
-  $('#colorpicker-preview').css('background-color', event.color.toString());
-});
-
-const singleSelectValues = ['all', 'unassigned', 'me'];
 $('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
+  const singleSelectValues = ['all', 'unassigned', 'me'];
   const { selectedOptions } = target;
   const selectedValues = [...selectedOptions].map(opt => opt.value);
-  const intersection = _.intersection(singleSelectValues, selectedValues);
-  if (!_.isEmpty(intersection)) {
+  const intersect = intersection(singleSelectValues, selectedValues);
+  if (!isEmpty(intersect)) {
     $(target)
       .val(target[clickedIndex].value)
       .selectpicker('refresh');
   }
+});
+
+$('#colorpicker').colorpicker();
+$('#colorpicker').on('colorpickerChange colorpickerCreate', event => {
+  $('#colorpicker-preview').css('background-color', event.color.toString());
 });

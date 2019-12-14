@@ -11,6 +11,9 @@ module.exports = {
         test: /\.js(\?.*)?$/i
       })
     ]
+    /* splitChunks: {
+      chunks: 'all'
+    } */
   },
   mode: process.env.NODE_ENV || 'development',
   entry: ['./src/index.js'],

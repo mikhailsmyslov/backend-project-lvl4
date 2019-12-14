@@ -113,7 +113,7 @@ export default router => {
       try {
         await task.update({ ...form });
         await task.setTags(tags);
-        await task.setAssignees(form.assigneeId);
+        await task.setAssignees(form.assigneeId || null);
         ctx.flash('info', 'Task has been updated');
         ctx.redirect(router.url('showTask', task.id));
       } catch (error) {

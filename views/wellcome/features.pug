@@ -1,0 +1,58 @@
+.jumbotron
+  h1.display-5.text-center Wellcome to the Task Manager!
+  p.lead.text-center This is simple demo app written within backend education course at 
+    a(href="https://ru.hexlet.io/")= 'Hexlet.'
+  p.text-center Main functionality: CRUD for users (soft delete), tasks and statuses.
+  p.small.text-center.font-weight-light
+      a.mr-4(href="https://github.com/mikhailsmyslov/backend-project-lvl4") View source code on GitHub
+  hr.my-4
+  p.text-center Already have and account?
+  p.lead.text-center
+    a.mr-4(href=urlFor('newSession')) Sign In
+    a(href=urlFor('newUser')) Sign Up
+  p.small.text-center.font-weight-light You can try to sign in with email: "demo@demo.com" and passsword: "passsword".  
+
+h4.text-center.mb-4 Used tools and technologies:
+
+.row.d-flex.justify-content-between
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Bootstrap 4
+        p.card-text The world’s most popular CSS framework for building responsive, mobile-first sites
+  .col-3    
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Koa.js
+        p.card-text A new web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for web applications and APIs.
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Pug (aka Jade)
+        p.card-text Robust, elegant, feature rich template engine for Node.js
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Sequelize
+        p.card-text Sequelize is a promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server.
+.row.d-flex.justify-content-between
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Webpack
+        p.card-text A static module bundler for modern JavaScript applications.             
+  .col-3
+      .card.bg-light.mb-3
+        .card-body
+          h5.card-title Passport.js
+          p.card-text Authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application.  
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Heroku
+        p.card-text A platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
+  .col-3
+    .card.bg-light.mb-3
+      .card-body
+        h5.card-title Jest
+        p.card-text Jest is a delightful JavaScript Testing Framework with a focus on simplicity.  

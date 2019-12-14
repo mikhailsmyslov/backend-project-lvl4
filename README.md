@@ -1,4 +1,4 @@
-## Page Loader
+## Task Manager
 ______________________
 #### by Mikhail Smyslov  
 
@@ -11,7 +11,25 @@ ______________________
 My fourth project on [Hexlet](https://ru.hexlet.io)  
 
 ### Description
-To be added later ...  
+Diploma project of backend Node.js education course.  
 
-### Application link
+A simple task manager, with the following functions:  
+* Users CRUD (with soft delete), including authentification
+* Tasks CRUD (including tags)
+* Statuses CRUD
+
+You can register, click around, create some tasks and assign it to other users or yourself or modify tasks descriptions / statuses etc.  
+
+### Used tools & technologies
+* Bootstrap 4
+* Koa.js
+* Sequelize
+* Passport.js
+* Webpack
+* Heroku PaaS
+* Pug (aka Jade)
+* Jest
+* Various Jquery plugins, such as: summernote, bootstrap-select etc...
+
+### Live Demo
 https://ms-taskmanager.herokuapp.com/ 

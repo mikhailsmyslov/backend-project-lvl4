@@ -42,6 +42,13 @@ afterEach(async () => {
   await server.close();
 });
 
+test('Protected routes', async () => {
+  const failRes = await request.agent(server).get(router.url('showTask', initialTask.id));
+  expect(failRes.status).toBe(302);
+  const successRes = await authenticatedAgent.get(router.url('tasks'));
+  expect(successRes.status).toBe(200);
+});
+
 test('Create task', async () => {
   const task = generateFaketask();
   const res = await authenticatedAgent.post(router.url('newTask')).send(task);
@@ -54,4 +61,21 @@ test('Show task', async () => {
   const res = await authenticatedAgent.get(router.url('showTask', initialTask.id));
   expect(res.status).toBe(200);
   expect(res.text).toEqual(expect.stringContaining('Task Details'));
+});
+
+test('Update task', async () => {
+  const expectedTaskName = 'updatedTask';
+  const res = await authenticatedAgent
+    .patch(router.url('updateTask', initialTask.id))
+    .send({ name: expectedTaskName });
+  expect(res.status).toBe(302);
+  const updatedTask = await Task.findByPk(initialTask.id);
+  expect(updatedTask.name).toEqual(expectedTaskName);
+});
+
+test('Delete task', async () => {
+  const res = await authenticatedAgent.delete(router.url('deleteTask', initialTask.id));
+  expect(res.status).toBe(302);
+  const { count } = await Task.findAndCountAll({ where: { id: initialTask.id } });
+  expect(count).toEqual(0);
 });

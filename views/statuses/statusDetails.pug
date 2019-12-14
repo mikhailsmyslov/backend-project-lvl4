@@ -10,8 +10,8 @@ h6.mb-4 Status details
     label.small.ml-2 Pick a color
     .input-group
       #colorpicker-preview.input-group-prepend.mb-3.border
-        i#colorpicker.fas.fa-eye.mx-3.mt-2
-      +input(formObj, 'color', { placeholder: 'Pick the status color' })
+        i.fas.fa-eye.mx-3.mt-2
+      +input(formObj, 'color', { placeholder: 'Pick the status color' })(id="colorpicker")
   .row.mt-3
     .col
       +button({ type: 'submit', value: 'Save' }).btn-outline-dark

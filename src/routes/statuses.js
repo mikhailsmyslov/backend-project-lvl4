@@ -2,6 +2,17 @@ import buildFormObj from '../../lib/formObjectBuilder';
 import ensureAuth from '../../lib/ensureAuth';
 import { Status } from '../../db/models';
 
+const ensureEditable = async (ctx, next) => {
+  const { id } = ctx.params;
+  const status = await Status.findByPk(id);
+  if (!status.isDefault) {
+    await next();
+    return;
+  }
+  ctx.flash('warning', 'Defaut statuses can not be edited or updated');
+  ctx.redirect('back');
+};
+
 export default router => {
   router
     .use('/statuses', ensureAuth)
@@ -30,7 +41,7 @@ export default router => {
 
     .post('newStatus', '/statuses/new', async ctx => {
       const form = ctx.request.body;
-      const status = await Status.build({ ...form, protected: false });
+      const status = await Status.build({ ...form });
       try {
         await status.save();
         ctx.flash('info', 'Status has been created');
@@ -41,7 +52,7 @@ export default router => {
       }
     })
 
-    .patch('updateStatus', '/statuses/:id', async ctx => {
+    .patch('updateStatus', '/statuses/:id', ensureEditable, async ctx => {
       const { id } = ctx.params;
       const form = ctx.request.body;
       const status = await Status.findByPk(id);
@@ -55,7 +66,7 @@ export default router => {
       }
     })
 
-    .delete('deleteStatus', '/statuses/:id', async ctx => {
+    .delete('deleteStatus', '/statuses/:id', ensureEditable, async ctx => {
       const { id } = ctx.params;
       await Status.destroy({ where: { id } });
       ctx.flash('info', 'Status has been deleted');

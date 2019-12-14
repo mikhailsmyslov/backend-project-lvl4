@@ -42,22 +42,28 @@ export default (sequelize, DataTypes) => {
       },
       state: {
         type: DataTypes.STRING,
-        allowNull: false,
         defaultValue: 'active'
       }
     },
     {
+      defaultScope: {
+        where: {
+          state: 'active'
+        }
+      },
+      scopes: {
+        deleted: {
+          where: {
+            state: 'deleted'
+          }
+        }
+      },
       getterMethods: {
         fullName() {
           return `${this.firstName} ${this.lastName}`;
         },
         isActive() {
           return this.state === 'active';
-        }
-      },
-      defaultScope: {
-        where: {
-          state: 'active'
         }
       }
     }
@@ -71,5 +77,14 @@ export default (sequelize, DataTypes) => {
       otherKey: 'taskId'
     });
   };
+
+  User.prototype.softDelete = function softDelete() {
+    this.state = 'deleted';
+  };
+
+  User.prototype.restore = function restore() {
+    this.state = 'active';
+  };
+
   return User;
 };

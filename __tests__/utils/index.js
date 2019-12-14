@@ -11,3 +11,9 @@ export const generateFaketask = () => ({
   name: faker.lorem.sentence(),
   description: faker.lorem.sentences()
 });
+
+export const generateFakeStatus = () => ({
+  name: faker.lorem.word(),
+  color: 'white',
+  protected: 'custom'
+});

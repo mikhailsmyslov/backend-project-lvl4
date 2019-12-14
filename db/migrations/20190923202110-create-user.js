@@ -9,8 +9,8 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+        unique: true,
+        allowNull: false
       },
       passwordDigest: {
         allowNull: false,
@@ -24,11 +24,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      state: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'active'
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -36,6 +31,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'active'
       }
     }),
   down: queryInterface => queryInterface.dropTable('Users')

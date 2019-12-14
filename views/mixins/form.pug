@@ -63,9 +63,21 @@ mixin filterSelect(list, property, formObj, options = {})
       title=title
     )&attributes(attributes)
       each option in additionalOptions
-        option(value=option.value, selected=isSelectedOption(option.value))= option.name
+          option(value=option.value, selected=isSelectedOption(option.value))= option.name
       if !_.isEmpty(additionalOptions)
         option(data-divider='true')
       each item in list
         - const value = item[valueKey].toString();
-        option(value=value, selected=isSelectedOption(value))= item[nameKey]
+        if item.color
+          option(
+            value=value,
+            selected=isSelectedOption(value),
+            data-content= `
+              <div style="display:flex;align-items: center;justify-content:space-between;">
+                <div>${item[nameKey]}</div>
+                <div style="width:20px;height:20px;background:${item.color};"></div>
+              </div>
+            `
+          )
+        else        
+          option(value=value, selected=isSelectedOption(value))= item[nameKey]            

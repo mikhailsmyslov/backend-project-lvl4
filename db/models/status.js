@@ -14,9 +14,19 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true
         }
+      },
+      state: {
+        type: DataTypes.STRING,
+        defaultValue: 'custom'
       }
     },
-    {}
+    {
+      getterMethods: {
+        isDefault() {
+          return this.state === 'default';
+        }
+      }
+    }
   );
   //  TaskStatus.associate = models => {
   // associations can be defined here

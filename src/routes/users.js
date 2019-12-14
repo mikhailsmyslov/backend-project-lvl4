@@ -37,14 +37,22 @@ export default router => {
       const {
         request: { body: form }
       } = ctx;
-      const user = await User.build(form);
+      const { email } = form;
+      const deletedUser = await User.scope('deleted').findOne({ where: { email } });
+      const user = !deletedUser ? await User.build(form) : deletedUser;
       try {
-        await user.save();
+        if (deletedUser) {
+          user.restore();
+          await user.save();
+          await user.update(form);
+        } else {
+          user.save();
+        }
         ctx.flash('info', 'User has been created');
         ctx.redirect(router.url('root'));
       } catch (error) {
         const formObj = buildFormObj(user, error);
-        await ctx.render('users/profile', { formObj });
+        await ctx.render('users/new', { formObj });
       }
     })
 
@@ -106,9 +114,9 @@ export default router => {
 
     .delete('editUser', '/users/profile', ensureAuth, async ctx => {
       const { user } = ctx.state;
-      const { id } = user;
-      await User.update({ state: 'deleted' }, { where: { id } });
+      await user.softDelete();
       await user.setAssignedTasks([]);
+      await user.save();
       ctx.flash('info', 'Account has been successfully deleted');
       ctx.logout();
       ctx.redirect('/');

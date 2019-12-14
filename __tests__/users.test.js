@@ -9,9 +9,10 @@ import encrypt from '../lib/secure';
 let server;
 let authenticatedAgent;
 let registeredUser;
-const router = new Router();
+let router;
 
 beforeAll(() => {
+  router = new Router();
   setRoutes(router);
   registeredUser = generateFakeUser();
 });
