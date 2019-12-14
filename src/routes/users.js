@@ -42,19 +42,15 @@ export default router => {
       const user = !deletedUser ? await User.build(form) : deletedUser;
       try {
         if (deletedUser) {
-          console.log(`!!!DELETED USER`);
           user.restore();
           await user.save();
           await user.update(form);
         } else {
-          console.log(`!!!NOT DELETED USER`);
-          user.save();
+          await user.save();
         }
         ctx.flash('info', 'User has been created');
         ctx.redirect(router.url('root'));
       } catch (error) {
-        console.log(`!!!ERROR:`);
-        console.log(error);
         const formObj = buildFormObj(user, error);
         await ctx.render('users/new', { formObj });
       }
