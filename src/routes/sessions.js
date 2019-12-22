@@ -13,8 +13,8 @@ export default router => {
       'createSession',
       '/session',
       passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/session/new',
+        successRedirect: router.url('root'),
+        failureRedirect: router.url('newSession'),
         failureFlash: 'Invalid email or password',
         successFlash: 'Successfuly signed in'
       })
@@ -22,6 +22,6 @@ export default router => {
 
     .delete('deleteSession', '/session', ensureAuth, ctx => {
       ctx.logout();
-      ctx.redirect('/');
+      ctx.redirect(router.url('root'));
     });
 };

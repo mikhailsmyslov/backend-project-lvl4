@@ -1,3 +1,31 @@
+import Sequelize from 'sequelize';
+
+const buildScope = association => (id = null, currnetUserId = null) => {
+  switch (id) {
+    case null:
+      return { include: [{ association, where: null }] };
+    case 'all':
+      return { include: [{ association, where: null }] };
+    case 'unassigned':
+      return {
+        where: {
+          id: { [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')] }
+        }
+      };
+    case 'me':
+      return { include: [{ association, where: { id: currnetUserId } }] };
+    default:
+      return { include: [{ association, where: { id } }] };
+  }
+};
+
+const mapScopesToAssociations = {
+  byCreator: 'Creator',
+  byAssignee: 'Assignees',
+  byTag: 'Tags',
+  byStatus: 'Status'
+};
+
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define(
     'Task',
@@ -42,5 +70,9 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'assigneeId'
     });
   };
+
+  Object.entries(mapScopesToAssociations).forEach(([scopeName, association]) =>
+    Task.addScope(scopeName, buildScope(association))
+  );
   return Task;
 };

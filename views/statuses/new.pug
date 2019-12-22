@@ -5,4 +5,7 @@ block content
   .d-flex.flex-row.justify-content-between
     include description
     include select
+    - const method = "post";
+    - const url = urlFor("createStatus");
+    include statusForm
   hr

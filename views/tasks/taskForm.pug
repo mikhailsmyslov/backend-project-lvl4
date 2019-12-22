@@ -1,15 +1,10 @@
 h3 Task Details
-- const isNewTask = currentPath === urlFor("newTask");
-- const method = isNewTask ? "post" : "patch";
-- const selectedTaskId = isNewTask ? null : formObj.data.id;
-- const url = isNewTask ? urlFor("createTask") : urlFor("updateTask", selectedTaskId);
-
 +formFor({ url, method })
-  +input(formObj, 'name', { placeholder: 'Enter task title' })(autocomplete="off")
+  +input(formObj, 'name', { placeholder: 'Enter task title' })(autocomplete='off')
   .row.mb-3
     .col.w-25
       label.small.mb-1
-        | Status:  
+        | Status:
       +filterSelect(statuses, 'statusId', formObj)(
         multiple=false,
         data-live-search=false,
@@ -17,7 +12,7 @@ h3 Task Details
       ).mr-2
     .col.w-25
       label.small.mb-1
-        | Assigned to:  
+        | Assigned to:
       +filterSelect(users, 'assigneeId', formObj, { nameKey: 'fullName', valueKey: 'id' })(
         data-width='100%',
         title='Nobody'
@@ -26,8 +21,7 @@ h3 Task Details
       p.small.float-right.mb-0= creator.fullName
       +avatar(creator, 'small').rounded-100.mx-2.float-right.mb-0
       p.small.float-right.mb-0 by:
-      if !isNewTask
-        p.small.float-right.mb-0= `on: ${moment(formObj.data.createdAt).format("MM-DD-YYYY")}`
+      p.small.float-right.mb-0=`on: ${moment(formObj.data.createdAt).format("MM-DD-YYYY")}`
   .row
     .d-flex.flex-row.justify-content-between.input-group.input-daterange
       .d-flex.flex-row.mx-2
@@ -50,7 +44,7 @@ h3 Task Details
     .col
       +button({ type: 'submit', value: 'Save' }).btn-outline-dark
         i.fas.fa-save.ml-2
-    if !isNewTask
+    if method === 'patch'
       .col
         a.btn.btn-outline-dark.float-right(
           href=urlFor("deleteTask", selectedTaskId),

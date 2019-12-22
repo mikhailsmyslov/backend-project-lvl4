@@ -1,0 +1,15 @@
+- const dataTableClass = currentPath === urlFor("users") ? "data-table" : "data-table-scroll-Y";
+table.table.table-sm.table-bordered.table-hover.table-striped(class=dataTableClass)
+    thead
+        tr
+        th Full Name
+        th Email
+        th Created At
+    tbody
+        each user in users
+            tr(onclick=`window.location=`)
+                td
+                    a.text-dark(href=urlFor("showUser", user.id))= user.fullName
+                td
+                    a.text-dark(href=urlFor("showUser", user.id))= user.email
+                td= moment(user.createdAt).format("YYYY-MM-DD [at] HH:mm")

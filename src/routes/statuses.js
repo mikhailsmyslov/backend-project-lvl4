@@ -15,28 +15,23 @@ const ensureEditable = async (ctx, next) => {
 
 export default router => {
   router
-    .use('/statuses', ensureAuth)
-    .use('/statuses', async (ctx, next) => {
+    .use('/statuses', ensureAuth, async (ctx, next) => {
       const statuses = await Status.findAll();
       ctx.state.statuses = statuses;
-      await next();
-    })
-    .use('/statuses', async (ctx, next) => {
-      ctx.state.currentPath = ctx.path;
       await next();
     })
 
     .get('statuses', '/statuses', async ctx => ctx.render('statuses'))
 
     .get('newStatus', '/statuses/new', async ctx =>
-      ctx.render('statuses', { formObj: buildFormObj({ color: '#fff' }) })
+      ctx.render('statuses/new', { formObj: buildFormObj({ color: '#fff' }) })
     )
 
-    .get('showStatus', '/statuses/:id', async ctx => {
+    .get('editStatus', '/statuses/:id', async ctx => {
       const { id } = ctx.params;
       const status = await Status.findByPk(id);
       const formObj = buildFormObj(status);
-      await ctx.render('statuses', { formObj });
+      await ctx.render('statuses/edit', { formObj, selectedStatusId: Number(id) });
     })
 
     .post('createStatus', '/statuses', async ctx => {
@@ -45,24 +40,25 @@ export default router => {
       try {
         await status.save();
         ctx.flash('info', 'Status has been created');
-        ctx.redirect(router.url('showStatus', status.id));
+        ctx.redirect(router.url('editStatus', status.id));
       } catch (error) {
         const formObj = buildFormObj(status, error);
-        await ctx.render('statuses', { formObj });
+        await ctx.render('statuses/edit', { formObj });
       }
     })
 
     .patch('updateStatus', '/statuses/:id', ensureEditable, async ctx => {
       const { id } = ctx.params;
       const form = ctx.request.body;
+      const { name, color } = form;
       const status = await Status.findByPk(id);
       try {
-        await status.update({ ...form });
+        await status.update({ name, color });
         ctx.flash('info', 'Status has been updated');
-        ctx.redirect(router.url('showStatus', id));
+        ctx.redirect(router.url('editStatus', id));
       } catch (error) {
         const formObj = buildFormObj({ ...status.dataValues, ...form }, error);
-        await ctx.render('statuses', { formObj });
+        await ctx.render('statuses/edit', { formObj });
       }
     })
 

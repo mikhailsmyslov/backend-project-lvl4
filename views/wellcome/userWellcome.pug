@@ -1,0 +1,11 @@
+.jumbotron
+  h1.display-5.text-center=`Wellcome to the Task Manager, ${user.fullName}!`
+  p.lead.text-center Click around to check what's new happened from your last visit!
+  hr.my-4
+  p.lead.text-center.mb-4 Want to update your 
+    a(href=urlFor("editUser")) profile
+    | ?
+  p.text-center.font-weight-light.mb-0 Aready finished?
+  p.text-center.font-weight-light.mb-0 Want to 
+    a(href=urlFor("deleteSession"), data-method='delete') sign out
+    | ?

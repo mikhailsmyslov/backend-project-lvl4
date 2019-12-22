@@ -1,28 +1,9 @@
 extends /layout/application.pug
 
 block content
-  .row.mb-5
-    .col.mt-3
-      .mb-4
-        include taskFilters
-      .mb-5
-        a(href=urlFor("newTask", { query }))
-          i.fas.fa-plus.mr-2
-          | New task
-      .mb-5
-        - const dataTableClass = currentPath === urlFor("tasks") ? "data-table" : "data-table-scroll-Y";
-        table.table.table-sm.table-hover(class=dataTableClass)
-          thead
-            tr
-              th Task
-              th Status
-              th Created at
-          tbody 
-            each task in tasks
-              tr(onclick=`window.location='${urlFor("showTask", task.id, { query })}'`)
-                td= task.name
-                td= task.Status.name
-                td= moment(task.createdAt).format("YYYY MMM Do")
-    if formObj
-      .col
-        include taskDetails
+  include taskFilters
+  .mt-2.mb-5
+    a(href=urlFor("newTask", { query }))
+      i.fas.fa-plus.mr-2
+      | New task
+  include showAll

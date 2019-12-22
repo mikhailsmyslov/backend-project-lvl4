@@ -43,7 +43,7 @@ afterEach(async () => {
 });
 
 test('Protected routes', async () => {
-  const failRes = await request.agent(server).get(router.url('showTask', initialTask.id));
+  const failRes = await request.agent(server).get(router.url('editTask', initialTask.id));
   expect(failRes.status).toBe(302);
   const successRes = await authenticatedAgent.get(router.url('tasks'));
   expect(successRes.status).toBe(200);
@@ -58,7 +58,7 @@ test('Create task', async () => {
 });
 
 test('Show task', async () => {
-  const res = await authenticatedAgent.get(router.url('showTask', initialTask.id));
+  const res = await authenticatedAgent.get(router.url('editTask', initialTask.id));
   expect(res.status).toBe(200);
   expect(res.text).toEqual(expect.stringContaining('Task Details'));
 });

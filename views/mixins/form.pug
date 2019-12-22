@@ -22,11 +22,11 @@ mixin input(formObj, property, options = {})
       .invalid-feedback
         = errors ? errors.map(({ message }) => message).join(". ") : ""
 
-mixin datepicker(formObj, property, options = { type: 'text', placeholder: '' })
-  - const rawValue = formObj.data[property] || "";
-  - const formattedValue = rawValue ? moment(rawValue).format("MM/DD/YYYY") : "";
+mixin datepicker(formObj, property, options = {})
+  - const rawValue = formObj.data[property] || null;
+  - const formattedValue = rawValue ? moment(rawValue).format("MM/DD/YYYY") : null;
   - const errors = formObj.errors[property];
-  - const { placeholder, type } = options;
+  - const { placeholder = '', type = 'text' } = options;
   .form-group
     input.datepicker.form-control.form-control-sm(
       class=errors ? "is-invalid" : "",
@@ -44,7 +44,7 @@ mixin textarea(formObj, property, options = { placeholder: '' })
   - const errors = formObj.errors[property];
   - const { placeholder } = options;
   .form-group
-    textarea.form-control(name=property, type='text', placeholder=placeholder)&attributes(attributes)= value
+    textarea.form-control.overflow-auto(name=property, type='text', placeholder=placeholder)&attributes(attributes)= value
 
 mixin button(options = { type: 'submit', value: '' })
   - const { type, value } = options;
@@ -69,11 +69,11 @@ mixin filterSelect(list, property, formObj, options = {})
       each item in list
         - const value = item[valueKey].toString();
         if item.color
-          option(
+          option.d-flex(
             value=value,
             selected=isSelectedOption(value),
             data-content= `
-              <div style="display:flex;align-items: center;justify-content:space-between;">
+              <div style="display:flex;align-items: center;justify-content:space-between;min-width:150px">
                 <div>${item[nameKey]}</div>
                 <div style="width:20px;height:20px;background:${item.color};"></div>
               </div>

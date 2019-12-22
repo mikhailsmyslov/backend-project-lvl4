@@ -1,28 +1,25 @@
 import $ from 'jquery';
 import moment from 'moment';
-import { intersection, isEmpty } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'jquery-ujs';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
 import 'datatables.net-bs4';
-import '../vendor/pictures/favicon.png';
-import '../vendor/pictures/logo.png';
-import '../vendor/plugins/katweKibsletterAvatarjs';
+import '../assets/favicon.png';
+import '../assets/logo.png';
+import letterAvatar from 'katwekibsletteravatar';
 import '@fortawesome/fontawesome-free/js/all.min';
 import 'bootstrap4-tagsinput/tagsinput';
 import 'bootstrap4-tagsinput/tagsinput.css';
 import 'bootstrap-select/dist/js/bootstrap-select.min';
 import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 import 'summernote/dist/summernote-bs4.css';
-import '../vendor/css/summernote-z-index-fix.css';
-import '../vendor/css/icon-link.css';
-import '../vendor/css/bs-select-item-aligment-fix.css';
 import 'summernote/dist/summernote-bs4.min';
 import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css';
 import 'bootstrap-datepicker';
 import 'bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css';
 import 'bootstrap-colorpicker/dist/js/bootstrap-colorpicker';
+import { intersection } from 'lodash/fp';
 
 $('.data-table').DataTable();
 $('.data-table-scroll-Y').DataTable({
@@ -52,7 +49,8 @@ $('.input-daterange').datepicker({
   todayBtn: 'linked',
   clearBtn: true,
   autoclose: true,
-  todayHighlight: true
+  todayHighlight: true,
+  zIndexOffset: 550
 });
 const calculateDuration = () => {
   const startDate = $('[name="startDate"]').datepicker('getDate');
@@ -71,7 +69,7 @@ $('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
   const { selectedOptions } = target;
   const selectedValues = [...selectedOptions].map(opt => opt.value);
   const intersect = intersection(singleSelectValues, selectedValues);
-  if (!isEmpty(intersect)) {
+  if (intersect.length !== 0) {
     $(target)
       .val(target[clickedIndex].value)
       .selectpicker('refresh');
@@ -81,4 +79,17 @@ $('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
 $('#colorpicker').colorpicker();
 $('#colorpicker').on('colorpickerChange colorpickerCreate', event => {
   $('#colorpicker-preview').css('background-color', event.color.toString());
+});
+
+letterAvatar.init({
+  dataChars: 2,
+  width: 60,
+  height: 60
+});
+
+$('select.select-link').on('change', function cb() {
+  const selectedIndex = $(this).prop('selectedIndex');
+  const selectedOption = $(this).children()[selectedIndex];
+  // eslint-disable-next-line no-undef
+  window.location = $(selectedOption).data('href');
 });

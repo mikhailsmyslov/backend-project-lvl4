@@ -1,0 +1,15 @@
+extends /layout/application.pug
+
+block content
+  .row
+    .col
+      include taskFilters
+      .mt-2.mb-5
+        a(href=urlFor("newTask", { query }))
+          i.fas.fa-plus.mr-2
+          | New task
+      include showAll
+    .col
+      - const method = "patch";
+      - const url = urlFor("updateTask", selectedTaskId, { query });  
+      include taskForm

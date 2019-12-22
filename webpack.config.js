@@ -18,9 +18,9 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: ['./src/index.js'],
   output: {
-    path: path.join(__dirname, 'public', 'assets'),
+    path: path.join(__dirname, 'public'),
     filename: 'main.js',
-    publicPath: '/public/assets/'
+    publicPath: '/public'
   },
   module: {
     rules: [
@@ -68,6 +68,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'require.specified': 'require.resolve'
-    })
+    }),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb/)
   ]
 };

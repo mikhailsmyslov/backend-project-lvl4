@@ -6,11 +6,6 @@ import encrypt from '../../lib/secure';
 
 export default router => {
   router
-    .use('/users', async (ctx, next) => {
-      ctx.state.currentPath = ctx.path;
-      await next();
-    })
-
     .get('users', '/users', async ctx => {
       const users = await User.findAll();
       await ctx.render('users', { users });
@@ -21,16 +16,16 @@ export default router => {
       await ctx.render('users/new', { formObj });
     })
 
-    .get('editUser', '/users/profile', ensureAuth, async ctx => {
+    .get('editUser', '/users/edit', ensureAuth, async ctx => {
       const formObj = buildFormObj(ctx.state.user);
-      await ctx.render('users/profile', { formObj });
+      await ctx.render('users/edit', { formObj });
     })
 
     .get('showUser', '/users/:id', ensureAuth, async ctx => {
       const { id } = ctx.params;
       const userToShow = await User.findByPk(id);
       const users = await User.findAll();
-      await ctx.render('users', { users, userToShow });
+      await ctx.render('users/show', { users, userToShow });
     })
 
     .post('createUser', '/users', async ctx => {
@@ -56,28 +51,29 @@ export default router => {
       }
     })
 
-    .put('editUser', '/users/profile', ensureAuth, async ctx => {
+    .put('editUser', '/users/edit', ensureAuth, async ctx => {
       const {
         request: { body: form }
       } = ctx;
-      const { id, email } = ctx.state.user;
+      const { firstName, lastName, email: newEmail } = form;
+      const { id, email: oldEmail } = ctx.state.user;
       try {
-        await User.update({ ...form }, { where: { id } });
+        await User.update({ firstName, lastName, email: newEmail }, { where: { id } });
         ctx.flash('info', 'Profile successfuly updated');
-        if (email !== form.email) {
+        if (newEmail !== oldEmail) {
           ctx.flash('warning', 'E-mail was changed, please, sign in using updated e-mail.');
           ctx.logout();
-          ctx.redirect('/');
+          ctx.redirect(router.url('root'));
           return;
         }
-        ctx.redirect('profile');
+        ctx.redirect('edit');
       } catch (error) {
         const formObj = buildFormObj(form, error);
-        await ctx.render('users/profile', { formObj });
+        await ctx.render('users/edit', { formObj });
       }
     })
 
-    .patch('editUser', '/users/profile', ensureAuth, async ctx => {
+    .patch('editUser', '/users/edit', ensureAuth, async ctx => {
       const {
         request: { body: form }
       } = ctx;
@@ -98,27 +94,27 @@ export default router => {
       }
       if (!_.isEmpty(errors)) {
         const formObj = buildFormObj({}, { errors });
-        await ctx.render('users/profile', { formObj });
+        await ctx.render('users/edit', { formObj });
         return;
       }
       try {
         await User.update({ password: newPassword }, { where: { id } });
         ctx.flash('info', 'Password successfuly changed. Please log in using new password');
         ctx.logout();
-        ctx.redirect('/');
+        ctx.redirect(router.url('root'));
       } catch (error) {
         const formObj = buildFormObj({}, error);
-        await ctx.render('users/profile', { formObj });
+        await ctx.render('users/edit', { formObj });
       }
     })
 
-    .delete('editUser', '/users/profile', ensureAuth, async ctx => {
+    .delete('editUser', '/users/edit', ensureAuth, async ctx => {
       const { user } = ctx.state;
       await user.softDelete();
       await user.setAssignedTasks([]);
       await user.save();
       ctx.flash('info', 'Account has been successfully deleted');
       ctx.logout();
-      ctx.redirect('/');
+      ctx.redirect(router.url('root'));
     });
 };
