@@ -1,17 +1,14 @@
 import Sequelize from 'sequelize';
 
-const buildScope = association => (id = null, currentUserId = null) => {
+const unassignedTasksSelector = {
+  id: { [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')] }
+};
+const buildFinderObj = association => id => {
   switch (id) {
     case 'all':
       return { include: [{ association, where: null }] };
     case 'unassigned':
-      return {
-        where: {
-          id: { [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')] }
-        }
-      };
-    case 'me':
-      return { include: [{ association, where: { id: currentUserId } }] };
+      return { where: unassignedTasksSelector };
     default:
       return { include: [{ association, where: { id } }] };
   }
@@ -70,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Object.entries(mapScopesToAssociations).forEach(([scopeName, association]) =>
-    Task.addScope(scopeName, buildScope(association))
+    Task.addScope(scopeName, buildFinderObj(association))
   );
   return Task;
 };

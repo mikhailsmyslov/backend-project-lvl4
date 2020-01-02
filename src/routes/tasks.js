@@ -3,7 +3,12 @@ import { User, Task, Status, Tag } from '../../db/models';
 import buildFormObj from '../../lib/formObjectBuilder';
 import processFormData from '../../lib/processFormData';
 
-const defaultStatusId = 1;
+let defaultStatusId;
+const getDefaultStatusId = async () => {
+  const { id } = await Status.findOne({ where: { name: 'Active' } });
+  return id;
+};
+
 const defaultCreatorId = 'all';
 const defaultAssigneeId = 'all';
 const defaultTagId = 'all';
@@ -16,6 +21,7 @@ const getTagsInstances = async tagsString => {
 };
 
 const applyTaskFilters = async (ctx, next) => {
+  if (!defaultStatusId) defaultStatusId = await getDefaultStatusId();
   const { query } = ctx.request;
   const {
     user: { id: currentUserId }
@@ -28,10 +34,10 @@ const applyTaskFilters = async (ctx, next) => {
   } = query;
 
   const tasks = await Task.scope(
-    { method: ['byStatus', statusId, currentUserId] },
-    { method: ['byCreator', creatorId, currentUserId] },
-    { method: ['byAssignee', assigneeId, currentUserId] },
-    { method: ['byTag', tagId, currentUserId] }
+    { method: ['byStatus', statusId] },
+    { method: ['byCreator', creatorId === 'me' ? currentUserId : creatorId] },
+    { method: ['byAssignee', assigneeId === 'me' ? currentUserId : assigneeId] },
+    { method: ['byTag', tagId] }
   ).findAll();
 
   const users = await User.findAll();
