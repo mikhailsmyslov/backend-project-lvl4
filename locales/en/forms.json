@@ -12,5 +12,6 @@
     },
     "submit": "Submit",
     "search": "Search",
-    "clear": "Clear"
+    "clear": "Clear",
+    "formatDate": "{{date, DD-MM-YYYY}}"
 }

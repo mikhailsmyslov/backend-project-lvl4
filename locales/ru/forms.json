@@ -12,5 +12,6 @@
     },
     "submit": "Подтвердить",
     "search": "Найти",
-    "clear": "Очистить"
+    "clear": "Очистить",
+    "formatDate": "{{date, DD-MM-YYYY}}"
 }

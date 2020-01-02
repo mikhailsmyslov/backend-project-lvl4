@@ -50,7 +50,8 @@ $('.input-daterange').datepicker({
   clearBtn: true,
   autoclose: true,
   todayHighlight: true,
-  zIndexOffset: 550
+  zIndexOffset: 550,
+  format: 'dd-mm-yyyy'
 });
 const calculateDuration = () => {
   const startDate = $('[name="startDate"]').datepicker('getDate');

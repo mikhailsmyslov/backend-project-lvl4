@@ -24,7 +24,7 @@ mixin input(formObj, property, options = {})
 
 mixin datepicker(formObj, property, options = {})
   - const rawValue = formObj.data[property] || null;
-  - const formattedValue = rawValue ? moment(rawValue).format("MM/DD/YYYY") : null;
+  - const formattedValue = rawValue ? t('forms:formatDate', { date: rawValue }) : null;
   - const errors = formObj.errors[property];
   - const { placeholder = '', type = 'text' } = options;
   .form-group
