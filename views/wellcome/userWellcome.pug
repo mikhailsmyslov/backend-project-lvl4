@@ -1,11 +1,11 @@
 .jumbotron
-  h1.display-5.text-center=`Wellcome to the Task Manager, ${user.fullName}!`
-  p.lead.text-center Click around to check what's new happened from your last visit!
+  h1.display-5.text-center= t('wellcome:wellcomeUser', { name: user.fullName })
+  p.lead.text-center= t('wellcome:clickAround')
   hr.my-4
-  p.lead.text-center.mb-4 Want to update your 
-    a(href=urlFor("editUser")) profile
+  p.lead.text-center.mb-4= t('wellcome:wantToUpdateYourProfile') 
+    a(href=urlFor("editUser"))= t('common:profile')
     | ?
-  p.text-center.font-weight-light.mb-0 Aready finished?
-  p.text-center.font-weight-light.mb-0 Want to 
-    a(href=urlFor("deleteSession"), data-method='delete') sign out
+  p.text-center.font-weight-light.mb-0= t('wellcome:alreadyFinished')
+  p.text-center.font-weight-light.mb-0= t('wellcome:wantTo')  
+    a(href=urlFor("deleteSession"), data-method='delete')= t('common:signOut')
     | ?

@@ -1,14 +1,17 @@
-- const dataTableClass = currentPath === urlFor("tasks") ? "data-table" : "data-table-scroll-Y";
-table.table.table-sm.table-striped.table-hover(class=dataTableClass)
+table.table.table-sm.table-striped.table-hover(class=dataTableClass || 'data-table')
   thead
     tr
-      th Task
-      th Status
-      th Created at
+      th= t('tasks:task')
+      th= t('tasks:status')
+      th= t('tasks:created')
   tbody 
     each task in tasks
       tr
         td
-          a.text-dark(href=urlFor("editTask", task.id, { query }))= task.name
-        td= task.Status.name
-        td= moment(task.createdAt).format("YYYY MMM Do")
+          a.text-dark(href=urlFor("editTask", task.id, { query }))
+            p= task.name
+        td
+          a.text-dark(href=urlFor("editTask", task.id, { query }))
+            p.small= task.Status.name
+        td
+          p.small= t('tasks:formatDate', { date: task.createdAt })

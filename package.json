@@ -16,7 +16,7 @@
   "scripts": {
     "test": "jest",
     "build": "npx webpack -p --env production",
-    "start": "gulp server",
+    "start": "NODE_ENV=production gulp server",
     "postinstall": "npm run build"
   },
   "repository": {
@@ -80,12 +80,16 @@
     "faker": "^4.1.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",
+    "i": "^0.3.6",
+    "i18next": "^19.0.2",
+    "i18next-sync-fs-backend": "^1.1.1",
     "jquery": "^3.4.1",
     "jquery-ujs": "^1.2.2",
     "katwekibsletteravatar": "git+https://github.com/mikhailsmyslov/katweKibsLetterAvatar.git",
     "koa": "^2.8.1",
     "koa-better-flash": "0.0.3",
     "koa-bodyparser": "^4.2.1",
+    "koa-i18next": "^1.1.1",
     "koa-logger": "^3.2.1",
     "koa-methodoverride": "^2.0.0",
     "koa-passport": "^4.1.3",
@@ -95,6 +99,7 @@
     "koa-static": "^5.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "npm": "^6.13.4",
     "passport-local": "^1.0.0",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",

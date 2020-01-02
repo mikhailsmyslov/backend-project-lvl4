@@ -1,0 +1,6 @@
+{
+    "users": {
+        "password": "Password is wrong",
+        "passwordConfirmation": "Password confirmation is wrong"
+    }
+}

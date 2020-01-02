@@ -1,10 +1,10 @@
 .jumbotron
   .d-flex.flex-column.align-items-start
-    p Task manager has the following predefined task statuses:
+    p= `${t('statuses:defaultStatusesDescription')}:`
     ul.list-group.ml-5
-      li Active
-      li Completed
-      li Canceled
-      li In progress
+      li= t('statuses:defaultStatuses.active')
+      li= t('statuses:defaultStatuses.completed')
+      li= t('statuses:defaultStatuses.canceled')
+      li= t('statuses:defaultStatuses.inProgress')
     p.mt-5
-      i These statuses can not be edited or deleted
+      i= t('statuses:editOrDeleteForbidden')

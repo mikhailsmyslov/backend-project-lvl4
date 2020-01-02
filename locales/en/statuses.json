@@ -1,0 +1,21 @@
+{
+    "defaultStatusesDescription": "Task manager has the following predefined task statuses",
+    "defaultStatuses": {
+        "active": "Active",
+        "completed": "Completed",
+        "canceled": "Canceled",
+        "inProgress": "In progress"
+    },
+    "editOrDeleteForbidden": "These statuses can not be edited or deleted",
+    "customizeTaskStatuses": "Customize task statuses",
+    "availableStatuses": "Available statuses",
+    "selectStatus": "Select status from a list",
+    "newStatus": "New status",
+    "checkStatuses": "Click to check statuses",
+    "statusDetails": "Status Details",
+    "statusName": "Status Name",
+    "enterStatusName": "EnterStatusName",
+    "pickColor": "Pick a color",
+    "pickStatusColor": "Pick status color",
+    "confirmStatusDelete": "Are you sure you want to delete status?"
+}

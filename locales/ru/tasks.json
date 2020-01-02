@@ -1,0 +1,22 @@
+{
+    "task": "Задача",
+    "status": "Статус",
+    "assignedTo": "Исполнитель",
+    "nobody": "Никто",
+    "by": "Созд.",
+    "on": "Дата",
+    "duration": "Длительность",
+    "created": "Создана", 
+    "formatDate": "{{date, DD-MM-YYYY}}",
+    "newTask": "Новая задача",
+    "taskDetails": "О задаче",
+    "filters": {
+        "all": "Все",
+        "me": "Я",
+        "unassigned": "Не назначен",
+        "tagLabel": "По тегу",
+        "statusLabel": "По статусу",
+        "assigneeLabel": "По испонителю",
+        "creatorLabel": "По создателю"
+    }
+}

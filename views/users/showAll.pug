@@ -2,14 +2,16 @@
 table.table.table-sm.table-bordered.table-hover.table-striped(class=dataTableClass)
     thead
         tr
-        th Full Name
-        th Email
-        th Created At
+        th= t('users:fullName')
+        th= t('users:email')
+        th= t('users:registered')
     tbody
         each user in users
-            tr(onclick=`window.location=`)
+            tr
                 td
-                    a.text-dark(href=urlFor("showUser", user.id))= user.fullName
+                    a.text-dark(href=urlFor("showUser", user.id))
+                        p= user.fullName
                 td
-                    a.text-dark(href=urlFor("showUser", user.id))= user.email
-                td= moment(user.createdAt).format("YYYY-MM-DD [at] HH:mm")
+                    a.text-dark(href=urlFor("showUser", user.id))
+                        p= user.email
+                td= t('users:formatDate', { date: user.createdAt })

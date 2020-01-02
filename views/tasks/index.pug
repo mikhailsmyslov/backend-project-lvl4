@@ -4,6 +4,7 @@ block content
   include taskFilters
   .mt-2.mb-5
     a(href=urlFor("newTask", { query }))
-      i.fas.fa-plus.mr-2
-      | New task
+      .row.align-items-center.ml-2
+          i.fas.fa-plus.mr-2
+          p.mb-0= t('tasks:newTask')
   include showAll

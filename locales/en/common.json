@@ -1,0 +1,17 @@
+{
+    "save": "Save",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "tasks": "Tasks",
+    "users": "Users",
+    "statuses": "Statuses",
+    "profile": "Profile",
+    "editProfile": "Edit Profile",
+    "customizeTaskStatuses": "Customize task statuses",
+    "moreActions": "More Actions",
+    "settings": "Settings"
+}

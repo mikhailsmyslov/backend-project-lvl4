@@ -65,7 +65,7 @@ describe('Authentication required', () => {
   test('Show user profile', async () => {
     const res = await authenticatedAgent.get(router.url('editUser'));
     expect(res.status).toBe(200);
-    expect(res.text).toEqual(expect.stringContaining('Profile details'));
+    expect(res.text).toEqual(expect.stringContaining('Profile Details'));
   });
 
   test('Update user e-mail', async () => {

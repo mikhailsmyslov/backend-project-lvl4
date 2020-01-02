@@ -46,7 +46,7 @@ test('Create status', async () => {
 test('Show status', async () => {
   const res = await authenticatedAgent.get(router.url('editStatus', customStatus.id));
   expect(res.status).toBe(200);
-  expect(res.text).toEqual(expect.stringContaining('Status details'));
+  expect(res.text).toEqual(expect.stringContaining('Status Details'));
 });
 
 test('Update status', async () => {

@@ -1,0 +1,15 @@
+{
+   "profileDetails": "Profile Details",
+   "deleteConfirmation": "Are you sure you want to delete your account? All personal data will be lost.",
+   "deleteAccount": "Delete Account",
+   "changePassword": "Change Password",
+   "oldPassword": "Old Password",
+   "newPassword": "New Password",
+   "confirmPassword": "Confirm Password",
+   "firstName": "First Name",
+   "fullName": "Full Name",
+   "lastName": "Last Name",
+   "email": "E-mail",
+   "registered": "Registered",
+   "formatDate": "{{date, YYYY-MM-DD [at] HH:mm}}"
+}

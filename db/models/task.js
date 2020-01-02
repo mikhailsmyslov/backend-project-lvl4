@@ -1,9 +1,7 @@
 import Sequelize from 'sequelize';
 
-const buildScope = association => (id = null, currnetUserId = null) => {
+const buildScope = association => (id = null, currentUserId = null) => {
   switch (id) {
-    case null:
-      return { include: [{ association, where: null }] };
     case 'all':
       return { include: [{ association, where: null }] };
     case 'unassigned':
@@ -13,7 +11,7 @@ const buildScope = association => (id = null, currnetUserId = null) => {
         }
       };
     case 'me':
-      return { include: [{ association, where: { id: currnetUserId } }] };
+      return { include: [{ association, where: { id: currentUserId } }] };
     default:
       return { include: [{ association, where: { id } }] };
   }

@@ -1,0 +1,21 @@
+{
+    "defaultStatusesDescription": "Task manager имеет следующие статусы по умолчанию",
+    "defaultStatuses": {
+        "active": "Активна",
+        "completed": "Завершена",
+        "canceled": "Отменена",
+        "inProgress": "В процессе"
+    },
+    "editOrDeleteForbidden": "Эти статусы не могут быть отредактированы или удалены",
+    "customizeTaskStatuses": "Настройка статусов задач",
+    "availableStatuses": "Доступные статусы",
+    "selectStatus": "Выберите статус из списка",
+    "newStatus": "Новый статус",
+    "checkStatuses": "Выберите статус",
+    "statusDetails": "О статусе",
+    "statusName": "Название статуса",
+    "enterStatusName": "Введите название статуса",
+    "pickColor": "Выберите цвет",
+    "pickStatusColor": "Выберите цвет статуса",
+    "confirmStatusDelete": "Вы уверены, что хотите удалить статус?"
+}

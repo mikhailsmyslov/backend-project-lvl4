@@ -1,0 +1,14 @@
+{
+  "wellcomeGuest": "Добро пожаловать в Task Manager!",
+  "wellcomeUser": "Добро пожаловать в Task Manager, {{name}}!",
+  "aboutApp": "Это простое приложение написанное в рамках обучения по направлению бэкэнд разработки на образовательном портале ",
+  "mainFeatures": "Основной функционал: CRUD для пользователей (soft delete), задач и статусов.",
+  "viewOnGitHub": "Посмотреть исходный код на GitHub",
+  "alreadyHaveAccount": "Уже есть аккаунт?",
+  "demoCredentials": "Вы можете войти использую следующий email: 'demo@demo.com' и пароль: 'passsword'.",
+  "usedTools": "Использованные инструменты",
+  "clickAround": "Проверьте что нового произошло со времени последнего Вашего визита!",
+  "alreadyFinished": "Уже закончили?",
+  "wantToUpdateYourProfile": "Желаете отредактировать Ваш ",
+  "wantTo": "Желаете "
+}

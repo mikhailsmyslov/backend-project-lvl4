@@ -1,7 +1,7 @@
 extends /layout/application.pug
 
 block content
-  h3.mb-4 Profile details
+  h3.mb-4= t('users:profileDetails')
   .row.mb-4
     +avatar(user, 'medium').mr-3 
     .dropright.mb-4.my-auto
@@ -11,46 +11,46 @@ block content
         aria-expanded='false'
       )= user.fullName
       .dropdown-menu(aria-labelledby='profileDropdownMenuLink')
-        h6.dropdown-header More actions
+        h6.dropdown-header= t('common:moreActions')
         .dropdown-divider
         a.dropdown-item.text-danger(
           href=urlFor("editUser"),
           data-method='delete',
-          data-confirm='Are you sure you want to delete your account? All personal data will be lost.'
-        ) Delete account
+          data-confirm= t('users:deleteConfirmation')
+        )= t('users:deleteAccount')
         .dropdown-divider
-        a.dropdown-item(href=urlFor("deleteSession"), data-method='delete') Sign Out
+        a.dropdown-item(href=urlFor("deleteSession"), data-method='delete')= t('common:signOut')
 
   +formFor({ url: urlFor('editUser'), method: 'put' }).mb-5
     .form-row.mb-3
       .col-md-4
-        label.small.ml-2 First name
-        +input(formObj, 'firstName', { placeholder: 'First name' })
+        label.small.ml-2= t('users:firstName')
+        +input(formObj, 'firstName', { placeholder: t('users:firstName') })
       .col-md-4
-        label.small.ml-2 Last name
-        +input(formObj, 'lastName', { placeholder: 'Last name' })
+        label.small.ml-2t= t('users:lastName')
+        +input(formObj, 'lastName', { placeholder: t('users:lastName') })
     .form-row.mb-3
       .col-md-4.mb-3
-        label.small.ml-2 E-mail
-        +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
+        label.small.ml-2= t('users:email')
+        +input(formObj, 'email', { type: 'email', placeholder: t('users:email') })
     .form-row.mb-3
       .col-md-2
-        +button({ type: 'submit', value: 'Save changes' }).btn.btn-sm.btn-outline-dark.btn-block 
+        +button({ type: 'submit', value: t('common:saveChanges') }).btn.btn-sm.btn-outline-dark.btn-block 
       .col-md-2
-        button.btn.btn-sm.btn-link.text-secondary(type='reset') Cancel
+        button.btn.btn-sm.btn-link.text-secondary(type='reset')= t('common:cancel')
 
-  h5.mb-3 Change password
+  h5.mb-3= t('users:changePassword')
   +formFor({ url: urlFor('editUser'), method: 'patch' }).mb-5
     .form-row.mb-3
       .col-md-4
-        label.small.ml-2 Old password
+        label.small.ml-2= t('users:oldPassword')
         +input(formObj, 'oldPassword', { type: 'password', placeholder: '' })
-        label.small.ml-2 New password
+        label.small.ml-2= t('users:newPassword')
         +input(formObj, 'newPassword', { type: 'password', placeholder: '' })
-        label.small.ml-2 Confirm password
+        label.small.ml-2= t('users:confirmPassword')
         +input(formObj, 'confirmPassword', { type: 'password', placeholder: '' })
     .form-row.mb-3
       .col-md-2
-        +button({ type: 'submit', value: 'Change password' }).btn.btn-sm.btn-outline-dark.btn-block 
+        +button({ type: 'submit', value: t('users:changePassword') }).btn.btn-sm.btn-outline-dark.btn-block 
       .col-md-2
-        button.btn.btn-sm.btn-link.text-secondary(type='reset') Cancel
+        button.btn.btn-sm.btn-link.text-secondary(type='reset')= t('common:cancel')

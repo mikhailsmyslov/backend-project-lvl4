@@ -1,0 +1,16 @@
+{
+    "placeholders": {
+        "email": "Enter e-mail",
+        "password": "Enter password",
+        "firstName": "Enter first name",
+        "lastName": "Enter last name",
+        "taskTitle": "Enter task title",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "taskDescription": "Enter task description",
+        "tags": "Enter Tags"
+    },
+    "submit": "Submit",
+    "search": "Search",
+    "clear": "Clear"
+}

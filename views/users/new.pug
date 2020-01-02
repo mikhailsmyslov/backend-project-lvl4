@@ -3,10 +3,10 @@ extends /layout/application.pug
 block content
   .row.justify-content-md-center
     .col-md-4
-      h3.text-center Sign Up
+      h3.text-center= t('common:signUp')
       +formFor({ url: urlFor('users'), method: 'post' })
-        +input(formObj, 'email', { type: 'email', placeholder: 'Enter your e-mail' })
-        +input(formObj, 'firstName', { placeholder: 'First name' })
-        +input(formObj, 'lastName', { placeholder: 'Last name' })
-        +input(formObj, 'password', { type: 'password', placeholder: 'Enter your password' })
-        +button({ type: 'submit', value: 'Submit' }).btn-lg.btn-dark.btn-block
+        +input(formObj, 'email', { type: 'email', placeholder: t('forms:placeholders.email') })
+        +input(formObj, 'firstName', { placeholder: t('forms:placeholders.firstName') })
+        +input(formObj, 'lastName', { placeholder: t('forms:placeholders.lastName') })
+        +input(formObj, 'password', { type: 'password', placeholder: t('forms:placeholders.password') })
+        +button({ type: 'submit', value: t('forms:submit') }).btn-lg.btn-dark.btn-block

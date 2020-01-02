@@ -1,24 +1,23 @@
 .d-flex.flex-column.align-items-center
-  h6.mb-4 Status details
+  h6.mb-4= t('statuses:statusDetails')
   +formFor({ url, method }) 
     .form-group.mb-4
-      label.small.ml-2 Status name
-      +input(formObj, 'name', { placeholder: 'Enter status name' }) 
+      label.small.ml-2= t('statuses:statusName')
+      +input(formObj, 'name', { placeholder: t('statuses:enterStatusName') }) 
     .form-group.mb-4
-      label.small.ml-2 Pick a color
+      label.small.ml-2= t('statuses:pickColor')
       .input-group
         #colorpicker-preview.input-group-prepend.mb-3.border
           i.fas.fa-eye.mx-3.mt-2
-        +input(formObj, 'color', { placeholder: 'Pick the status color' })(id="colorpicker")
-    .row.mt-3
-      .col
-        +button({ type: 'submit', value: 'Save' }).btn-outline-dark
-          i.fas.fa-save.ml-2
-      .col
-        if method === 'patch'  
-          a.btn.btn-outline-dark.float-right(
+        +input(formObj, 'color', { placeholder: t('statuses:pickStatusColor') })(id="colorpicker")
+    .d-flex.justify-content-between.mt-3
+      +button({ type: 'submit', value: t('common:save') }).btn-outline-dark
+        i.fas.fa-save.ml-2
+      if method === 'patch'
+        .form-group
+          a.btn.btn-outline-dark(
             data-method='delete',
             href=urlFor("deleteStatus", selectedStatusId),
-            data-confirm='Are you sure you want to delete status?'
-        )
+            data-confirm= t('statuses:confirmStatusDelete')
+          )
             i.fas.fa-trash-alt

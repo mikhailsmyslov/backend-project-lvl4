@@ -1,7 +1,7 @@
 import ensureAuth from '../../lib/ensureAuth';
 import { User, Task, Status, Tag } from '../../db/models';
 import buildFormObj from '../../lib/formObjectBuilder';
-import parseFormData from '../../lib/parseFormData';
+import processFormData from '../../lib/processFormData';
 
 const defaultStatusId = 1;
 const defaultCreatorId = 'all';
@@ -39,7 +39,8 @@ const applyTaskFilters = async (ctx, next) => {
   const tags = await Tag.findAll();
   const filters = buildFormObj({ statusId, creatorId, assigneeId, tagId });
   ctx.state.query = query;
-  ctx.state.filteredData = { users, statuses, tasks, tags, filters };
+  const resetUrl = ctx.path;
+  ctx.state.filteredData = { users, statuses, tasks, tags, filters, resetUrl };
   await next();
 };
 
@@ -67,7 +68,7 @@ export default router => {
     })
 
     .post('createTask', '/tasks', async ctx => {
-      const form = parseFormData(ctx.request.body);
+      const form = processFormData(ctx.request.body);
       const task = await Task.build({ creatorId: ctx.state.user.id, ...form });
       const tags = await getTagsInstances(form.tags);
       const { query } = ctx.request;
@@ -75,7 +76,7 @@ export default router => {
         await task.save();
         await task.addAssignees(form.assigneeId);
         await task.addTags(tags);
-        ctx.flash('info', 'Task has been created');
+        ctx.flash('info', ctx.t('flash:tasks.created'));
         ctx.redirect(router.url('editTask', task.id, { query }));
       } catch (error) {
         const formObj = buildFormObj(form, error);
@@ -87,7 +88,7 @@ export default router => {
     })
 
     .patch('updateTask', '/tasks/:id', async ctx => {
-      const form = parseFormData(ctx.request.body);
+      const form = processFormData(ctx.request.body);
       const { name, description, startDate, endDate, statusId } = form;
       const { id } = ctx.params;
       const task = await Task.findByPk(id);
@@ -97,7 +98,7 @@ export default router => {
         await task.update({ name, description, startDate, endDate, statusId });
         await task.setTags(tags);
         await task.setAssignees(form.assigneeId || null);
-        ctx.flash('info', 'Task has been updated');
+        ctx.flash('info', ctx.t('flash:tasks.updated'));
         ctx.redirect(router.url('editTask', task.id, { query }));
       } catch (error) {
         const formObj = buildFormObj({ ...task.dataValues, ...form }, error);
@@ -109,7 +110,7 @@ export default router => {
     .delete('deleteTask', '/tasks/:id', async ctx => {
       const { id } = ctx.params;
       await Task.destroy({ where: { id } });
-      ctx.flash('info', 'Task has been deleted');
-      ctx.redirect(router.url('tasks', { ...ctx.request.query }));
+      ctx.flash('info', ctx.t('flash:tasks.deleted'));
+      ctx.redirect(router.url('tasks', ctx.request.query));
     });
 };

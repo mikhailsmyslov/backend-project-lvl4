@@ -1,0 +1,14 @@
+{
+  "wellcomeGuest": "Wellcome to the Task Manager!",
+  "wellcomeUser": "Wellcome to the Task Manager, {{name}}!",
+  "aboutApp": "This is simple demo app written within backend education course at",
+  "mainFeatures": "Main functionality: CRUD for users (soft delete), tasks and statuses.",
+  "viewOnGitHub": "View source code on GitHub",
+  "alreadyHaveAccount": "Already have and account?",
+  "demoCredentials": "You can try to sign in with email: 'demo@demo.com' and passsword: 'passsword'.",
+  "usedTools": " Used tools and technologies",
+  "clickAround": "Click around to check what's new happened from your last visit!",
+  "alreadyFinished": "Aready finished?",
+  "wantToUpdateYourProfile": "Want to update your ",
+  "wantTo": "Want to "
+}

@@ -4,14 +4,14 @@ block content
     .col.mt-3
       include showAll
     .col-4
-      h3.mb-5.ml-2.text-center User Details
+      h3.mb-5.ml-2.text-center= t('users:profileDetails')
       .col.align-self-center
         .row.ml-1.mb-5
           +avatar(userToShow, 'large').mr-4
           h4.align-self-center= userToShow.fullName
         .mb-3
-          h5 Email:
+          h5= `${t('users:email')}:`
           p= userToShow.email
         .mb-3
-          h5 Registered:
-          p= moment(userToShow.createdAt).format("YYYY-MM-DD [at] HH:mm")
+          h5= `${t('users:registered')}:`
+          p= t('users:formatDate', { date: userToShow.createdAt })

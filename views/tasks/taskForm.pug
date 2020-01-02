@@ -1,48 +1,48 @@
-h3 Task Details
+h3= t('tasks:taskDetails')
 +formFor({ url, method })
-  +input(formObj, 'name', { placeholder: 'Enter task title' })(autocomplete='off')
+  +input(formObj, 'name', { placeholder: t('forms:placeholders.taskTitle') })(autocomplete='off')
   .row.mb-3
     .col.w-25
-      label.small.mb-1
-        | Status:
+      label.small.mb-1= `${t('tasks:status')}:`
       +filterSelect(statuses, 'statusId', formObj)(
         multiple=false,
         data-live-search=false,
         data-width='100%'
       ).mr-2
     .col.w-25
-      label.small.mb-1
-        | Assigned to:
+      label.small.mb-1= `${t('tasks:assignedTo')}:`
       +filterSelect(users, 'assigneeId', formObj, { nameKey: 'fullName', valueKey: 'id' })(
         data-width='100%',
-        title='Nobody'
+        title= t('tasks:nobody')
       ).mr-2
     .col.w-50.h-100.align-self-center
-      p.small.float-right.mb-0= creator.fullName
-      +avatar(creator, 'small').rounded-100.mx-2.float-right.mb-0
-      p.small.float-right.mb-0 by:
-      p.small.float-right.mb-0=`on: ${moment(formObj.data.createdAt).format("MM-DD-YYYY")}`
+      .d-flex.justify-content-between.align-items-center
+        p.small.mb-0=`${t('tasks:by')}:`
+        +avatar(creator, 'small').rounded-100.mb-0
+        p.small.mb-0= creator.fullName
+
+      p.small.float-right.mb-0=`${t('tasks:on')}: ${t('tasks:formatDate', { date: formObj.data.createdAt })}`
   .row
     .d-flex.flex-row.justify-content-between.input-group.input-daterange
       .d-flex.flex-row.mx-2
         i#startDate.fas.fa-hourglass-start.fa-sm.my-2.mx-2
-        +datepicker(formObj, 'startDate', { placeholder: 'Start date'})
+        +datepicker(formObj, 'startDate', { placeholder: t('forms:placeholders.startDate')})
       .d-flex.flex-row.mx-2
         i#endDate.fas.fa-hourglass-end.fa-sm.my-2.mx-2
-        +datepicker(formObj, 'endDate', { placeholder: 'End date'})
+        +datepicker(formObj, 'endDate', { placeholder: t('forms:placeholders.endDate')})
       .d-flex.flex-row.mx-3.my-2
-        p.small.mr-2 Duration:
+        p.small.mr-2= t('tasks:duration')
         p#duration.small= "---"
 
-  +textarea(formObj, 'description', { placeholder: 'Enter task description' }).summernote(rows='12')
+  +textarea(formObj, 'description', { placeholder: t('forms:placeholders.taskDescription')}).summernote(rows='12')
   .row
     .col-mx-auto.ml-4
       i.fas.fa-tag.fa-lg.mt-2
     .col 
-      +input(formObj, 'tags', { placeholder: 'Enter tags' })(required=false, data-role='tagsinput').tags-input 
+      +input(formObj, 'tags', { placeholder: t('forms:placeholders.tags') })(required=false, data-role='tagsinput').tags-input 
   .row
     .col
-      +button({ type: 'submit', value: 'Save' }).btn-outline-dark
+      +button({ type: 'submit', value: t('forms:save') }).btn-outline-dark
         i.fas.fa-save.ml-2
     if method === 'patch'
       .col

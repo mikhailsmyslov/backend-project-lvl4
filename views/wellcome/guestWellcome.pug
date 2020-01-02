@@ -1,18 +1,18 @@
 .jumbotron
-  h1.display-5.text-center Wellcome to the Task Manager!
-  p.lead.text-center This is simple demo app written within backend education course at 
+  h1.display-5.text-center= t('wellcome:wellcomeGuest')
+  p.lead.text-center= t('wellcome:aboutApp') 
     a(href="https://ru.hexlet.io/")= 'Hexlet.'
-  p.text-center Main functionality: CRUD for users (soft delete), tasks and statuses.
+  p.text-center= t('wellcome:mainFeatures')
   p.small.text-center.font-weight-light
-      a.mr-4(href="https://github.com/mikhailsmyslov/backend-project-lvl4") View source code on GitHub
+      a.mr-4(href="https://github.com/mikhailsmyslov/backend-project-lvl4")= t('wellcome:viewOnGitHub')
   hr.my-4
-  p.text-center Already have and account?
+  p.text-center= t('wellcome:alreadyHaveAccount')
   p.lead.text-center
-    a.mr-4(href=urlFor('newSession')) Sign In
-    a(href=urlFor('newUser')) Sign Up
-  p.small.text-center.font-weight-light You can try to sign in with email: "demo@demo.com" and passsword: "passsword".  
+    a.mr-4(href=urlFor('newSession'))= t('common:signIn')
+    a(href=urlFor('newUser'))= t('common:signUp')
+  p.small.text-center.font-weight-light= t('wellcome:demoCredentials')  
 
-h4.text-center.mb-4 Used tools and technologies:
+h4.text-center.mb-4= `${t('wellcome:usedTools')}:`
 
 .row.d-flex.justify-content-between
   .col-3

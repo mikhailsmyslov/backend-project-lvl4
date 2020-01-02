@@ -1,48 +1,43 @@
-- const { users, statuses, tasks, tags, filters } = filteredData;
-- const allSelectOption = { value: "all", name: "All" };
-- const unassignedSelectOption = { value: "unassigned", name: "Unassigned" };
-- const meSelectOptions = { value: "me", name: "Me" };
+- const { users, statuses, tasks, tags, filters, resetUrl } = filteredData;
+- const allSelectOption = { value: "all", name: t('tasks:filters.all') };
+- const unassignedSelectOption = { value: "unassigned", name: t('tasks:filters.unassigned') };
+- const meSelectOptions = { value: "me", name: t('tasks:filters.me') };
 +formFor({ url: '', method: 'get' })
   .row
     .form-group.w-25
       i.fas.fa-tag.fa-xs.mr-2
-      label.small
-        | By tags
+      label.small= t('tasks:filters.tagLabel')
       +filterSelect(tags, 'tagId', filters, { additionalOptions: [allSelectOption] })(
         data-width='90%',
-        title='By tag'
+        title= t('tasks:filters.tagLabel')
       ).mr-2
     .form-group.w-25
       i.fas.fa-minus-square.fa-xs.mr-2
-      label.small
-        | By status      
+      label.small= t('tasks:filters.statusLabel')      
       +filterSelect(statuses, 'statusId', filters, { additionalOptions: [allSelectOption] })(
         data-live-search=false,
         data-width='90%',
-        title='By status',
+        title= t('tasks:filters.statusLabel'),
         data-selected-text-format="count"
       ).mr-2
     .form-group.w-25
       i.fas.fa-users.fa-xs.mr-2
-      label.small
-        | By assignees     
-      - const additionalOptions = [{ value: "unassigned", name: "Unassigned" }];
+      label.small= t('tasks:filters.assigneeLabel')    
       +filterSelect(users, 'assigneeId', filters, { nameKey: 'fullName', valueKey: 'id', additionalOptions: [allSelectOption, unassignedSelectOption, meSelectOptions] })(
         data-width='90%',
-        title='Assigned To'
+        title= t('tasks:filters.assigneeLabel')
       ).mr-2
     .form-group.w-25
       i.fas.fa-user-tie.fa-xs.mr-2
-      label.small
-        | By creator      
+      label.small= t('tasks:filters.creatorLabel')     
       +filterSelect(users, 'creatorId', filters, { nameKey: 'fullName', valueKey: 'id', additionalOptions: [allSelectOption, meSelectOptions]})(
         data-width='90%'
-        title="Created By"
+        title= t('tasks:filters.creatorLabel')
       ).mr-2
   .mr-4
     .row.justify-content-end
-        +button({ type: 'submit', value: 'Search' }).badge.badge-pill.badge-dark
+        +button({ type: 'submit', value: t('forms:search') }).badge.badge-pill.badge-dark
         .form-group
           a.btn.badge.badge-pill.badge-light.border.border-dark(
-            href='javascript:window.location.href = window.location.pathname'
-          ).ml-2 Clear
+            href= resetUrl
+          ).ml-2= t('forms:clear')

@@ -43,7 +43,7 @@ export default router => {
         } else {
           await user.save();
         }
-        ctx.flash('info', 'User has been created');
+        ctx.flash('info', ctx.t('flash:users.created'));
         ctx.redirect(router.url('root'));
       } catch (error) {
         const formObj = buildFormObj(user, error);
@@ -59,9 +59,9 @@ export default router => {
       const { id, email: oldEmail } = ctx.state.user;
       try {
         await User.update({ firstName, lastName, email: newEmail }, { where: { id } });
-        ctx.flash('info', 'Profile successfuly updated');
+        ctx.flash('info', ctx.t('flash:users.updated'));
         if (newEmail !== oldEmail) {
-          ctx.flash('warning', 'E-mail was changed, please, sign in using updated e-mail.');
+          ctx.flash('warning', ctx.t('flash:users.emailChanged'));
           ctx.logout();
           ctx.redirect(router.url('root'));
           return;
@@ -83,13 +83,13 @@ export default router => {
       if (encrypt(oldPassword) !== passwordDigest) {
         errors.push({
           path: 'oldPassword',
-          message: 'Wrong password'
+          message: ctx.t('errors:users.password')
         });
       }
       if (newPassword !== confirmPassword) {
         errors.push({
           path: 'confirmPassword',
-          message: 'Password confirmation wrong'
+          message: ctx.t('errors:users.passwordConfirmation')
         });
       }
       if (!_.isEmpty(errors)) {
@@ -99,7 +99,7 @@ export default router => {
       }
       try {
         await User.update({ password: newPassword }, { where: { id } });
-        ctx.flash('info', 'Password successfuly changed. Please log in using new password');
+        ctx.flash('info', ctx.t('flash:users.passwordChanged'));
         ctx.logout();
         ctx.redirect(router.url('root'));
       } catch (error) {
@@ -113,7 +113,7 @@ export default router => {
       await user.softDelete();
       await user.setAssignedTasks([]);
       await user.save();
-      ctx.flash('info', 'Account has been successfully deleted');
+      ctx.flash('info', ctx.t('flash:users.deleted'));
       ctx.logout();
       ctx.redirect(router.url('root'));
     });

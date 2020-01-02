@@ -1,0 +1,22 @@
+{
+    "task": "Task",
+    "status": "Status",
+    "assignedTo": "Assigned To",
+    "nobody": "Nobody",
+    "by": "By",
+    "on": "On",
+    "duration": "Duration",
+    "created": "Created", 
+    "formatDate": "{{date, DD-MM-YYYY}}",
+    "newTask": "New Task",
+    "taskDetails": "Task Details",
+    "filters": {
+        "all": "All",
+        "me": "Me",
+        "unassigned": "Unassigned",
+        "tagLabel": "By tag",
+        "statusLabel": "By status",
+        "assigneeLabel": "By assignee",
+        "creatorLabel": "By creator"
+    }
+}

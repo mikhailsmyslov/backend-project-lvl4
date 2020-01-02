@@ -40,7 +40,7 @@ mixin datepicker(formObj, property, options = {})
       = errors ? errors.map(({ message }) => message).join(". ") : ""
 
 mixin textarea(formObj, property, options = { placeholder: '' })
-  - const value = formObj.data[property] || "";
+  - const value = formObj.data[property] || '';
   - const errors = formObj.errors[property];
   - const { placeholder } = options;
   .form-group
@@ -51,7 +51,7 @@ mixin button(options = { type: 'submit', value: '' })
   .form-group
     button.btn(type=type)&attributes(attributes)= value
       block
-
+  
 mixin filterSelect(list, property, formObj, options = {})
   - const selectedNormalizedValues = _.flattenDeep([formObj.data[property]]).map(v => String(v));
   - const isSelectedOption = value => selectedNormalizedValues.includes(value);
@@ -62,20 +62,20 @@ mixin filterSelect(list, property, formObj, options = {})
       data-live-search='true',
       title=title
     )&attributes(attributes)
-      each option in additionalOptions
-          option(value=option.value, selected=isSelectedOption(option.value))= option.name
       if !_.isEmpty(additionalOptions)
+        each option in additionalOptions
+            option(value=option.value, selected=isSelectedOption(option.value))= option.name
         option(data-divider='true')
       each item in list
         - const value = item[valueKey].toString();
         if item.color
-          option.d-flex(
+          option(
             value=value,
             selected=isSelectedOption(value),
-            data-content= `
-              <div style="display:flex;align-items: center;justify-content:space-between;min-width:150px">
+            data-content=`
+              <div class="d-flex justify-content-between align-items-center" style="min-width:120px;">
                 <div>${item[nameKey]}</div>
-                <div style="width:20px;height:20px;background:${item.color};"></div>
+                <div class="p-2" style="background:${item.color};"></div>
               </div>
             `
           )

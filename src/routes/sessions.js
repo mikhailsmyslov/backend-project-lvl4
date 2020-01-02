@@ -9,15 +9,13 @@ export default router => {
       await ctx.render('sessions/new', { formObj });
     })
 
-    .post(
-      'createSession',
-      '/session',
+    .post('createSession', '/session', async ctx =>
       passport.authenticate('local', {
         successRedirect: router.url('root'),
         failureRedirect: router.url('newSession'),
-        failureFlash: 'Invalid email or password',
-        successFlash: 'Successfuly signed in'
-      })
+        failureFlash: ctx.t('flash:auth.failure'),
+        successFlash: ctx.t('flash:auth.success')
+      })(ctx)
     )
 
     .delete('deleteSession', '/session', ensureAuth, ctx => {

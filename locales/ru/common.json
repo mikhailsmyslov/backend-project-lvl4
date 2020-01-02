@@ -1,0 +1,17 @@
+{
+    "save": "Сохранить",
+    "saveChanges": "Сохранить изменения",
+    "cancel": "Отменить",
+    "delete": "Удалить",
+    "signIn": "Войти",
+    "signOut": "Выйти",
+    "signUp": "Регистрация",
+    "tasks": "Задачи",
+    "users": "Пользователи",
+    "statuses": "Статусы",
+    "profile": "Профиль",
+    "editProfile": "Редактировать профиль",
+    "customizeTaskStatuses": "Настройка статусов задач",
+    "moreActions": "Меню",
+    "settings": "Настройки"
+}

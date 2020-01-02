@@ -1,0 +1,15 @@
+{
+   "profileDetails": "Профиль пользователя",
+   "deleteConfirmation": "Вы увереныЕ, что хотите удалить аккаунт? Все Ваши данные будут потеряны.",
+   "deleteAccount": "Удалить аккаунт",
+   "changePassword": "Изменить пароль",
+   "oldPassword": "Старый пароль",
+   "newPassword": "Новый пароль",
+   "confirmPassword": "Подтвердите пароль",
+   "firstName": "Имя",
+   "fullName": "Полное имя",
+   "lastName": "Фамилия",
+   "email": "E-mail",
+   "registered": "Зарегестрирован",
+   "formatDate": "{{date, YYYY-MM-DD [at] HH:mm}}"
+}

@@ -9,7 +9,7 @@ const ensureEditable = async (ctx, next) => {
     await next();
     return;
   }
-  ctx.flash('warning', 'Defaut statuses can not be edited or updated');
+  ctx.flash('warning', ctx.t('flash:statuses.defaultStatusModifiactionForbidden'));
   ctx.redirect('back');
 };
 
@@ -39,7 +39,7 @@ export default router => {
       const status = await Status.build({ ...form });
       try {
         await status.save();
-        ctx.flash('info', 'Status has been created');
+        ctx.flash('info', ctx.t('flash:statuses.created'));
         ctx.redirect(router.url('editStatus', status.id));
       } catch (error) {
         const formObj = buildFormObj(status, error);
@@ -54,7 +54,7 @@ export default router => {
       const status = await Status.findByPk(id);
       try {
         await status.update({ name, color });
-        ctx.flash('info', 'Status has been updated');
+        ctx.flash('info', ctx.t('flash:statuses.updated'));
         ctx.redirect(router.url('editStatus', id));
       } catch (error) {
         const formObj = buildFormObj({ ...status.dataValues, ...form }, error);
@@ -65,7 +65,7 @@ export default router => {
     .delete('deleteStatus', '/statuses/:id', ensureEditable, async ctx => {
       const { id } = ctx.params;
       await Status.destroy({ where: { id } });
-      ctx.flash('info', 'Status has been deleted');
+      ctx.flash('info', ctx.t('flash:statuses.deleted'));
       ctx.redirect(router.url('statuses'));
     });
 };

@@ -2,7 +2,7 @@ install:
 	npm install
 
 start:
-	npx nodemon --exec gulp server
+	NODE_ENV=development npx nodemon --exec gulp server
 
 build:
 	rm -rf public
