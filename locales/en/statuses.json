@@ -14,7 +14,7 @@
     "checkStatuses": "Click to check statuses",
     "statusDetails": "Status Details",
     "statusName": "Status Name",
-    "enterStatusName": "EnterStatusName",
+    "enterStatusName": "Enter status name",
     "pickColor": "Pick a color",
     "pickStatusColor": "Pick status color",
     "confirmStatusDelete": "Are you sure you want to delete status?"

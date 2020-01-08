@@ -4,7 +4,7 @@ h3= t('tasks:taskDetails')
   .row.mb-3
     .col.w-25
       label.small.mb-1= `${t('tasks:status')}:`
-      +filterSelect(statuses, 'statusId', formObj)(
+      +filterSelect(statuses, 'statusId', formObj, { nameKey: 'displayName' })(
         multiple=false,
         data-live-search=false,
         data-width='100%'
@@ -47,7 +47,7 @@ h3= t('tasks:taskDetails')
     if method === 'patch'
       .col
         a.btn.btn-outline-dark.float-right(
-          href=urlFor("deleteTask", selectedTaskId),
+          href='',
           data-method='delete'
         )
           i.fas.fa-trash-alt

@@ -3,6 +3,7 @@ import ensureAuth from '../../lib/ensureAuth';
 import { User } from '../../db/models';
 import buildFormObj from '../../lib/formObjectBuilder';
 import encrypt from '../../lib/secure';
+import normalizeStr from '../../lib/normalizeStr';
 
 export default router => {
   router
@@ -34,7 +35,9 @@ export default router => {
       } = ctx;
       const { email } = form;
       const deletedUser = await User.scope('deleted').findOne({ where: { email } });
-      const user = !deletedUser ? await User.build(form) : deletedUser;
+      const user = !deletedUser
+        ? await User.build({ ...form, email: normalizeStr(email) })
+        : deletedUser;
       try {
         if (deletedUser) {
           user.restore();
@@ -58,7 +61,10 @@ export default router => {
       const { firstName, lastName, email: newEmail } = form;
       const { id, email: oldEmail } = ctx.state.user;
       try {
-        await User.update({ firstName, lastName, email: newEmail }, { where: { id } });
+        await User.update(
+          { firstName, lastName, email: normalizeStr(newEmail) },
+          { where: { id } }
+        );
         ctx.flash('info', ctx.t('flash:users.updated'));
         if (newEmail !== oldEmail) {
           ctx.flash('warning', ctx.t('flash:users.emailChanged'));

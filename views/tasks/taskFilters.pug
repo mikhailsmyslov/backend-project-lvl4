@@ -1,4 +1,3 @@
-- const { users, statuses, tasks, tags, filters, resetUrl } = filteredData;
 - const allSelectOption = { value: "all", name: t('tasks:filters.all') };
 - const unassignedSelectOption = { value: "unassigned", name: t('tasks:filters.unassigned') };
 - const meSelectOptions = { value: "me", name: t('tasks:filters.me') };
@@ -14,7 +13,7 @@
     .form-group.w-25
       i.fas.fa-minus-square.fa-xs.mr-2
       label.small= t('tasks:filters.statusLabel')      
-      +filterSelect(statuses, 'statusId', filters, { additionalOptions: [allSelectOption] })(
+      +filterSelect(statuses, 'statusId', filters, { additionalOptions: [allSelectOption], valueKey: 'name', nameKey: 'displayName' })(
         data-live-search=false,
         data-width='90%',
         title= t('tasks:filters.statusLabel'),

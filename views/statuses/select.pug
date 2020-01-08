@@ -7,7 +7,7 @@
         value=status.id,
         selected=status.id === selectedStatusId
         data-href=urlFor("editStatus", status.id)
-      )= status.name
+      )= status.displayName
   a(href=urlFor("newStatus"))
     .row
       i.fas.fa-plus.fa-lg.mr-2

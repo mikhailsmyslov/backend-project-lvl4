@@ -1,5 +1,5 @@
 mixin formFor(options = {})
-  - const { url, method = "get" } = options;
+  - const { url = '', method = "get" } = options;
   - const isStandard = ["get", "post"].includes(method);
   form(action=url, method=isStandard ? method : "post")&attributes(attributes)
     if (!isStandard)
@@ -53,7 +53,7 @@ mixin button(options = { type: 'submit', value: '' })
       block
   
 mixin filterSelect(list, property, formObj, options = {})
-  - const selectedNormalizedValues = _.flattenDeep([formObj.data[property]]).map(v => String(v));
+  - const selectedNormalizedValues = _.flattenDeep([formObj.data[property]]).map(v => String(v).toLowerCase());
   - const isSelectedOption = value => selectedNormalizedValues.includes(value);
   - const { valueKey = "id", nameKey = "name", additionalOptions = [] } = options;
     select.selectpicker.form-control.form-control-sm(
@@ -67,17 +67,17 @@ mixin filterSelect(list, property, formObj, options = {})
             option(value=option.value, selected=isSelectedOption(option.value))= option.name
         option(data-divider='true')
       each item in list
-        - const value = item[valueKey].toString();
+        - const value = item[valueKey].toString().toLowerCase();
         if item.color
           option(
             value=value,
             selected=isSelectedOption(value),
             data-content=`
-              <div class="d-flex justify-content-between align-items-center" style="min-width:150px;">
+              <div class="d-flex justify-content-between align-items-center" style="min-width:100px;">
                 <div>${item[nameKey]}</div>
                 <div class="p-2" style="background:${item.color};"></div>
               </div>
             `
           )
         else        
-          option(value=value, selected=isSelectedOption(value))= item[nameKey]            
+          option(value=value, selected=isSelectedOption(value))= item[nameKey]           

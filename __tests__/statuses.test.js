@@ -38,9 +38,9 @@ test('Protected routes', async () => {
 test('Create status', async () => {
   const status = generateFakeStatus();
   const res = await authenticatedAgent.post(router.url('createStatus')).send(status);
-  const { count } = await Status.findAndCountAll({ where: { name: status.name } });
+  const { color } = await Status.findOne({ where: { name: status.name } });
   expect(res.status).toBe(302);
-  expect(count).not.toBe(0);
+  expect(color).toEqual(status.color);
 });
 
 test('Show status', async () => {
@@ -53,7 +53,7 @@ test('Update status', async () => {
   const expectedColor = 'black';
   const res = await authenticatedAgent
     .patch(router.url('updateStatus', customStatus.id))
-    .send({ color: expectedColor });
+    .send({ name: customStatus.name, color: expectedColor });
   expect(res.status).toBe(302);
   const updatedStatus = await Status.findByPk(customStatus.id);
   expect(updatedStatus.color).toEqual(expectedColor);
@@ -62,14 +62,14 @@ test('Update status', async () => {
 test('Delete status', async () => {
   const res = await authenticatedAgent.delete(router.url('deleteStatus', customStatus.id));
   expect(res.status).toBe(302);
-  const { count } = await Status.findAndCountAll({ where: { id: customStatus.id } });
-  expect(count).toEqual(0);
+  const status = await Status.findOne({ where: { id: customStatus.id } });
+  expect(status).toBe(null);
 });
 
 test('Should not modify default status', async () => {
   const defaultStatus = await Status.create({ ...generateFakeStatus(), state: 'default' });
   const res = await authenticatedAgent.delete(router.url('deleteStatus', defaultStatus.id));
   expect(res.status).toBe(302);
-  const { count } = await Status.findAndCountAll({ where: { id: defaultStatus.id } });
-  expect(count).not.toBe(0);
+  const { name } = await Status.findByPk(defaultStatus.id);
+  expect(name).toEqual(defaultStatus.name);
 });

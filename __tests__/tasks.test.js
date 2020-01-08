@@ -52,9 +52,9 @@ test('Protected routes', async () => {
 test('Create task', async () => {
   const task = generateFaketask();
   const res = await authenticatedAgent.post(router.url('createTask')).send(task);
-  const { count } = await Task.findAndCountAll({ where: { name: task.name } });
+  const { description } = await Task.findOne({ where: { name: task.name } });
   expect(res.status).toBe(302);
-  expect(count).not.toBe(0);
+  expect(description).toEqual(task.description);
 });
 
 test('Show task', async () => {
@@ -76,6 +76,6 @@ test('Update task', async () => {
 test('Delete task', async () => {
   const res = await authenticatedAgent.delete(router.url('deleteTask', initialTask.id));
   expect(res.status).toBe(302);
-  const { count } = await Task.findAndCountAll({ where: { id: initialTask.id } });
-  expect(count).toEqual(0);
+  const task = await Task.findByPk(initialTask.id);
+  expect(task).toBe(null);
 });

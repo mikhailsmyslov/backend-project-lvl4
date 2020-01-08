@@ -36,9 +36,9 @@ describe('Authentication is not required', () => {
       .agent(server)
       .post(router.url('createUser'))
       .send(user);
-    const { count } = await User.findAndCountAll({ where: { email: user.email } });
+    const dbUser = await User.findOne({ where: { email: user.email } });
     expect(res.status).toBe(302);
-    expect(count).not.toBe(0);
+    expect(user.firstName).toEqual(dbUser.firstName);
   });
 
   test('Show users', async () => {
@@ -71,15 +71,15 @@ describe('Authentication required', () => {
   test('Update user e-mail', async () => {
     const modifiedUser = generateFakeUser();
     const res = await authenticatedAgent.put(router.url('editUser')).send(modifiedUser);
-    const { count: oldUserCount } = await User.findAndCountAll({
+    const oldUser = await User.findOne({
       where: { email: registeredUser.email }
     });
-    const { count: newUserCount } = await User.findAndCountAll({
+    const newUser = await User.findOne({
       where: { email: modifiedUser.email }
     });
-    expect(oldUserCount).toEqual(0);
+    expect(oldUser).toBe(null);
     expect(res.status).toBe(302);
-    expect(newUserCount).not.toEqual(0);
+    expect(newUser.lastName).toEqual(modifiedUser.lastName);
   });
 
   test('Update user password', async () => {
@@ -99,9 +99,9 @@ describe('Authentication required', () => {
 
   test('User delete', async () => {
     const res = await authenticatedAgent.delete(router.url('editUser'));
-    const { count } = await User.findAndCountAll({ where: { email: registeredUser.email } });
+    const user = await User.findOne({ where: { email: registeredUser.email } });
     expect(res.status).toBe(302);
-    expect(count).toEqual(0);
+    expect(user).toBe(null);
   });
 
   test('User log out', async () => {

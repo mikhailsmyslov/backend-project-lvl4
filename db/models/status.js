@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 module.exports = (sequelize, DataTypes) => {
   const TaskStatus = sequelize.define(
     'Status',
@@ -24,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       getterMethods: {
         isDefault() {
           return this.state === 'default';
+        },
+        displayName() {
+          return _.capitalize(this.name);
         }
       }
     }

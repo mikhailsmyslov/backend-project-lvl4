@@ -1,5 +1,6 @@
 import buildFormObj from '../../lib/formObjectBuilder';
 import ensureAuth from '../../lib/ensureAuth';
+import normalizeStr from '../../lib/normalizeStr';
 import { Status } from '../../db/models';
 
 const ensureEditable = async (ctx, next) => {
@@ -36,14 +37,14 @@ export default router => {
 
     .post('createStatus', '/statuses', async ctx => {
       const form = ctx.request.body;
-      const status = await Status.build({ ...form });
+      const status = await Status.build({ ...form, name: normalizeStr(form.name) });
       try {
         await status.save();
         ctx.flash('info', ctx.t('flash:statuses.created'));
         ctx.redirect(router.url('editStatus', status.id));
       } catch (error) {
         const formObj = buildFormObj(status, error);
-        await ctx.render('statuses/edit', { formObj });
+        await ctx.render('statuses/new', { formObj });
       }
     })
 
@@ -53,12 +54,12 @@ export default router => {
       const { name, color } = form;
       const status = await Status.findByPk(id);
       try {
-        await status.update({ name, color });
+        await status.update({ name: normalizeStr(name), color });
         ctx.flash('info', ctx.t('flash:statuses.updated'));
         ctx.redirect(router.url('editStatus', id));
       } catch (error) {
         const formObj = buildFormObj({ ...status.dataValues, ...form }, error);
-        await ctx.render('statuses/edit', { formObj });
+        await ctx.render('statuses/edit', { formObj, selectedStatusId: Number(id) });
       }
     })
 
