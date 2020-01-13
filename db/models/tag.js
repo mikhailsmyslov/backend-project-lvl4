@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
         validate: {
-          notEmpty: true
-        }
-      }
+          notEmpty: true,
+        },
+      },
     },
-    {}
+    {},
   );
   //  Tag.associate = models => {
   // associations can be defined here

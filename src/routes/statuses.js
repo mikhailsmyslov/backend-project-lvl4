@@ -14,7 +14,7 @@ const ensureEditable = async (ctx, next) => {
   ctx.redirect('back');
 };
 
-export default router => {
+export default (router) => {
   router
     .use('/statuses', ensureAuth, async (ctx, next) => {
       const statuses = await Status.findAll();
@@ -22,20 +22,18 @@ export default router => {
       await next();
     })
 
-    .get('statuses', '/statuses', async ctx => ctx.render('statuses'))
+    .get('statuses', '/statuses', async (ctx) => ctx.render('statuses'))
 
-    .get('newStatus', '/statuses/new', async ctx =>
-      ctx.render('statuses/new', { formObj: buildFormObj({ color: '#fff' }) })
-    )
+    .get('newStatus', '/statuses/new', async (ctx) => ctx.render('statuses/new', { formObj: buildFormObj({ color: '#fff' }) }))
 
-    .get('editStatus', '/statuses/:id', async ctx => {
+    .get('editStatus', '/statuses/:id', async (ctx) => {
       const { id } = ctx.params;
       const status = await Status.findByPk(id);
       const formObj = buildFormObj(status);
       await ctx.render('statuses/edit', { formObj, selectedStatusId: Number(id) });
     })
 
-    .post('createStatus', '/statuses', async ctx => {
+    .post('createStatus', '/statuses', async (ctx) => {
       const form = ctx.request.body;
       const status = await Status.build({ ...form, name: normalizeStr(form.name) });
       try {
@@ -48,7 +46,7 @@ export default router => {
       }
     })
 
-    .patch('updateStatus', '/statuses/:id', ensureEditable, async ctx => {
+    .patch('updateStatus', '/statuses/:id', ensureEditable, async (ctx) => {
       const { id } = ctx.params;
       const form = ctx.request.body;
       const { name, color } = form;
@@ -63,7 +61,7 @@ export default router => {
       }
     })
 
-    .delete('deleteStatus', '/statuses/:id', ensureEditable, async ctx => {
+    .delete('deleteStatus', '/statuses/:id', ensureEditable, async (ctx) => {
       const { id } = ctx.params;
       await Status.destroy({ where: { id } });
       ctx.flash('info', ctx.t('flash:statuses.deleted'));

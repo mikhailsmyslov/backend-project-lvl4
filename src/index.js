@@ -24,13 +24,13 @@ import { intersection } from 'lodash/fp';
 $('.data-table').DataTable();
 $('.data-table-scroll-Y').DataTable({
   scrollY: '320px',
-  scrollCollapse: true
+  scrollCollapse: true,
 });
 $('.tags-input').tagsinput({
   tagClass: 'badge badge-pill badge-secondary mr-1',
   trimValue: true,
   maxChars: 20,
-  maxTags: 10
+  maxTags: 10,
 });
 $('.summernote').summernote({
   height: 300,
@@ -42,8 +42,8 @@ $('.summernote').summernote({
     ['para', ['ul', 'ol', 'paragraph']],
     ['table', ['table']],
     ['insert', ['link', 'picture']],
-    ['view', ['fullscreen']]
-  ]
+    ['view', ['fullscreen']],
+  ],
 });
 $('.input-daterange').datepicker({
   todayBtn: 'linked',
@@ -51,7 +51,7 @@ $('.input-daterange').datepicker({
   autoclose: true,
   todayHighlight: true,
   zIndexOffset: 550,
-  format: 'dd-mm-yyyy'
+  format: 'dd-mm-yyyy',
 });
 const calculateDuration = () => {
   const startDate = $('[name="startDate"]').datepicker('getDate');
@@ -68,7 +68,7 @@ $('.datepicker')
 $('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
   const singleSelectValues = ['all', 'unassigned', 'me'];
   const { selectedOptions } = target;
-  const selectedValues = [...selectedOptions].map(opt => opt.value);
+  const selectedValues = [...selectedOptions].map((opt) => opt.value);
   const intersect = intersection(singleSelectValues, selectedValues);
   if (intersect.length !== 0) {
     $(target)
@@ -78,14 +78,14 @@ $('.selectpicker').on('changed.bs.select', ({ target }, clickedIndex) => {
 });
 
 $('#colorpicker').colorpicker();
-$('#colorpicker').on('colorpickerChange colorpickerCreate', event => {
+$('#colorpicker').on('colorpickerChange colorpickerCreate', (event) => {
   $('#colorpicker-preview').css('background-color', event.color.toString());
 });
 
 letterAvatar.init({
   dataChars: 2,
   width: 60,
-  height: 60
+  height: 60,
 });
 
 $('select.select-link').on('change', function cb() {

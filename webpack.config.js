@@ -8,23 +8,23 @@ module.exports = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        test: /\.js(\?.*)?$/i
-      })
-    ]
+        test: /\.js(\?.*)?$/i,
+      }),
+    ],
   },
   mode: process.env.NODE_ENV || 'development',
   entry: ['./src/index.js'],
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'main.js',
-    publicPath: '/public'
+    publicPath: '/public',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: 'babel-loader'
+        use: 'babel-loader',
       },
       {
         test: /\.css$/,
@@ -32,12 +32,12 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              hmr: process.env.NODE_ENV === 'development'
-            }
+              hmr: process.env.NODE_ENV === 'development',
+            },
           },
           'css-loader',
-          'postcss-loader'
-        ]
+          'postcss-loader',
+        ],
       },
       { test: /\.(woff|woff2|eot|ttf|svg)(\?.*)?$/, loader: 'url-loader?limit=100000' },
       {
@@ -46,26 +46,26 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]'
-            }
-          }
-        ]
-      }
-    ]
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default']
+      Popper: ['popper.js', 'default'],
     }),
     new MiniCssExtractPlugin({
-      filename: 'main.css'
+      filename: 'main.css',
     }),
     new webpack.DefinePlugin({
-      'require.specified': 'require.resolve'
+      'require.specified': 'require.resolve',
     }),
-    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb/)
-  ]
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en-gb/),
+  ],
 };

@@ -3,19 +3,19 @@ import Sequelize from 'sequelize';
 const { Op } = Sequelize;
 
 const unassignedTasksSelector = {
-  id: { [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')] }
+  id: { [Sequelize.Op.notIn]: [Sequelize.literal('SELECT "taskId" FROM "TaskAssignees"')] },
 };
 
 const slugColName = 'name';
 
-const buildFinderObj = association => selector => {
+const buildFinderObj = (association) => (selector) => {
   switch (selector) {
     case 'all':
       return { include: [{ association, where: null }] };
     case 'unassigned':
       return { where: unassignedTasksSelector };
     default:
-      if (RegExp(/^\D*$/).test(selector))
+      if (RegExp(/^\D*$/).test(selector)) {
         return {
           include: [
             {
@@ -23,12 +23,13 @@ const buildFinderObj = association => selector => {
               where: Sequelize.where(
                 Sequelize.fn('lower', Sequelize.col([association, slugColName].join('.'))),
                 {
-                  [Op.in]: [selector].flat()
-                }
-              )
-            }
-          ]
+                  [Op.in]: [selector].flat(),
+                },
+              ),
+            },
+          ],
         };
+      }
       return { include: [{ association, where: { id: selector } }] };
   }
 };
@@ -37,7 +38,7 @@ const mapScopesToAssociations = {
   byCreator: 'Creator',
   byAssignee: 'Assignees',
   byTag: 'Tags',
-  byStatus: 'Status'
+  byStatus: 'Status',
 };
 
 module.exports = (sequelize, DataTypes) => {
@@ -47,46 +48,45 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       description: DataTypes.TEXT,
       startDate: {
         type: DataTypes.DATE,
         allowNull: true,
         validate: {
-          isDate: true
-        }
+          isDate: true,
+        },
       },
       endDate: {
         type: DataTypes.DATE,
         allowNull: true,
         validate: {
-          isDate: true
-        }
-      }
+          isDate: true,
+        },
+      },
     },
-    {}
+    {},
   );
-  Task.associate = models => {
+  Task.associate = (models) => {
     Task.belongsTo(models.Status, { as: 'Status', foreignKey: 'statusId' });
     Task.belongsToMany(models.Tag, {
       as: 'Tags',
       through: 'TaskTags',
       foreignKey: 'taskId',
-      otherKey: 'tagId'
+      otherKey: 'tagId',
     });
     Task.belongsTo(models.User, { as: 'Creator', foreignKey: 'creatorId' });
     Task.belongsToMany(models.User, {
       as: 'Assignees',
       through: 'TaskAssignees',
       foreignKey: 'taskId',
-      otherKey: 'assigneeId'
+      otherKey: 'assigneeId',
     });
   };
 
-  Object.entries(mapScopesToAssociations).forEach(([scopeName, association]) =>
-    Task.addScope(scopeName, buildFinderObj(association))
-  );
+  Object.entries(mapScopesToAssociations)
+    .forEach(([scopeName, association]) => Task.addScope(scopeName, buildFinderObj(association)));
   return Task;
 };

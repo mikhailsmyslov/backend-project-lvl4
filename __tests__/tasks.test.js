@@ -24,14 +24,14 @@ beforeEach(async () => {
       ...generateFaketask(),
       Status: {
         name: 'Active',
-        color: 'blue'
+        color: 'blue',
       },
-      Creator: registeredUser
+      Creator: registeredUser,
     },
     {
       include: ['Status', 'Creator'],
-      logging: false
-    }
+      logging: false,
+    },
   );
   server = await app().listen();
   authenticatedAgent = request.agent(server);
@@ -77,5 +77,5 @@ test('Delete task', async () => {
   const res = await authenticatedAgent.delete(router.url('deleteTask', initialTask.id));
   expect(res.status).toBe(302);
   const task = await Task.findByPk(initialTask.id);
-  expect(task).toBe(null);
+  expect(task).toBeNull();
 });

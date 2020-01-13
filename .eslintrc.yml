@@ -9,10 +9,9 @@ plugins:
 
 parser: babel-eslint
 
-extends: 
+extends:
   - 'airbnb-base'
   - 'plugin:jest/recommended'
-  - 'plugin:prettier/recommended'
 
 rules:
   no-console: 0

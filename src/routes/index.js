@@ -6,4 +6,4 @@ import statuses from './statuses';
 
 const controllers = [wellcome, users, sessions, tasks, statuses];
 
-export default router => controllers.forEach(ctrl => ctrl(router));
+export default (router) => controllers.forEach((ctrl) => ctrl(router));

@@ -72,12 +72,12 @@ describe('Authentication required', () => {
     const modifiedUser = generateFakeUser();
     const res = await authenticatedAgent.put(router.url('editUser')).send(modifiedUser);
     const oldUser = await User.findOne({
-      where: { email: registeredUser.email }
+      where: { email: registeredUser.email },
     });
     const newUser = await User.findOne({
-      where: { email: modifiedUser.email }
+      where: { email: modifiedUser.email },
     });
-    expect(oldUser).toBe(null);
+    expect(oldUser).toBeNull();
     expect(res.status).toBe(302);
     expect(newUser.lastName).toEqual(modifiedUser.lastName);
   });
@@ -88,11 +88,11 @@ describe('Authentication required', () => {
     const passwordForm = {
       oldPassword: registeredUser.password,
       newPassword,
-      confirmPassword: newPassword
+      confirmPassword: newPassword,
     };
     await authenticatedAgent.patch(router.url('editUser')).send(passwordForm);
     const { passwordDigest } = await User.findOne({
-      where: { email: registeredUser.email }
+      where: { email: registeredUser.email },
     });
     expect(passwordDigest).toEqual(newPasswordDigest);
   });
@@ -101,7 +101,7 @@ describe('Authentication required', () => {
     const res = await authenticatedAgent.delete(router.url('editUser'));
     const user = await User.findOne({ where: { email: registeredUser.email } });
     expect(res.status).toBe(302);
-    expect(user).toBe(null);
+    expect(user).toBeNull();
   });
 
   test('User log out', async () => {

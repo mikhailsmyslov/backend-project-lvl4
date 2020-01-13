@@ -5,16 +5,16 @@ export const generateFakeUser = () => ({
   lastName: faker.name.lastName(),
   email: faker.internet.email().toLowerCase(),
   password: faker.internet.password(),
-  state: 'active'
+  state: 'active',
 });
 
 export const generateFaketask = () => ({
   name: faker.lorem.sentence(),
-  description: faker.lorem.sentences()
+  description: faker.lorem.sentences(),
 });
 
 export const generateFakeStatus = () => ({
   name: faker.lorem.word().toLowerCase(),
   color: 'white',
-  state: 'custom'
+  state: 'custom',
 });

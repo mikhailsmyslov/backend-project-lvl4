@@ -23,28 +23,28 @@ i18next.use(Backend).init({
   debug: process.env.NODE_ENV === 'development',
   backend: {
     loadPath: path.resolve(__dirname, '../locales/{{lng}}/{{ns}}.json'),
-    addPath: path.resolve(__dirname, '../locales/{{lng}}/{{ns}}.missing.json')
+    addPath: path.resolve(__dirname, '../locales/{{lng}}/{{ns}}.missing.json'),
   },
   interpolation: {
     format: (value, format) => {
       if (value instanceof Date) return moment(value).format(format);
       return value;
-    }
+    },
   },
   preload: ['en', 'ru'],
   fallbackLng: 'en',
   lng: 'en',
   ns: ['common', 'flash', 'errors', 'forms', 'statuses', 'tasks', 'users', 'wellcome'],
-  initImmediate: false
+  initImmediate: false,
 });
-i18next.on('languageChanged', lng => moment.locale(lng));
+i18next.on('languageChanged', (lng) => moment.locale(lng));
 
 const app = new Koa();
 const router = new Router();
 const rollbar = new Rollbar({
   accessToken: process.env.PORTPOST_SERVER_ITEM_ACCESS_TOKEN,
   captureUncaught: true,
-  captureUnhandledRejections: true
+  captureUnhandledRejections: true,
 });
 const pug = new Pug({
   viewPath: path.resolve(__dirname, '../views'),
@@ -53,10 +53,10 @@ const pug = new Pug({
   pretty: true,
   compileDebug: false,
   locals: {
-    bsAlertClasses: ['info', 'success', 'danger', 'warning']
+    bsAlertClasses: ['info', 'success', 'danger', 'warning'],
   },
   basedir: path.resolve(__dirname, '../views'),
-  helperPath: [{ _ }, { urlFor: (...args) => router.url(...args) }]
+  helperPath: [{ _ }, { urlFor: (...args) => router.url(...args) }],
 });
 
 export default () => {
@@ -72,8 +72,8 @@ export default () => {
     koaI18next(i18next, {
       lookupCookie: 'lang',
       order: ['cookie'],
-      next: true
-    })
+      next: true,
+    }),
   );
   app.use(session({}, app));
   app.use(bodyParser());
@@ -86,7 +86,7 @@ export default () => {
       ...ctx.state,
       flashMessages: ctx.flash(),
       isSignedIn: () => ctx.isAuthenticated(),
-      t: ctx.t
+      t: ctx.t,
     };
     await next();
   });

@@ -8,19 +8,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       color: {
         type: DataTypes.STRING,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       state: {
         type: DataTypes.STRING,
-        defaultValue: 'custom'
-      }
+        defaultValue: 'custom',
+      },
     },
     {
       getterMethods: {
@@ -29,9 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         displayName() {
           return _.capitalize(this.name);
-        }
-      }
-    }
+        },
+      },
+    },
   );
   //  TaskStatus.associate = models => {
   // associations can be defined here

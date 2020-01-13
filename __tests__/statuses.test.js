@@ -63,7 +63,7 @@ test('Delete status', async () => {
   const res = await authenticatedAgent.delete(router.url('deleteStatus', customStatus.id));
   expect(res.status).toBe(302);
   const status = await Status.findOne({ where: { id: customStatus.id } });
-  expect(status).toBe(null);
+  expect(status).toBeNull();
 });
 
 test('Should not modify default status', async () => {

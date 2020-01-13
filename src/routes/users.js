@@ -5,33 +5,33 @@ import buildFormObj from '../../lib/formObjectBuilder';
 import encrypt from '../../lib/secure';
 import normalizeStr from '../../lib/normalizeStr';
 
-export default router => {
+export default (router) => {
   router
-    .get('users', '/users', async ctx => {
+    .get('users', '/users', async (ctx) => {
       const users = await User.findAll();
       await ctx.render('users', { users });
     })
 
-    .get('newUser', '/users/new', async ctx => {
+    .get('newUser', '/users/new', async (ctx) => {
       const formObj = buildFormObj({});
       await ctx.render('users/new', { formObj });
     })
 
-    .get('editUser', '/users/edit', ensureAuth, async ctx => {
+    .get('editUser', '/users/edit', ensureAuth, async (ctx) => {
       const formObj = buildFormObj(ctx.state.user);
       await ctx.render('users/edit', { formObj });
     })
 
-    .get('showUser', '/users/:id', ensureAuth, async ctx => {
+    .get('showUser', '/users/:id', ensureAuth, async (ctx) => {
       const { id } = ctx.params;
       const userToShow = await User.findByPk(id);
       const users = await User.findAll();
       await ctx.render('users/show', { users, userToShow });
     })
 
-    .post('createUser', '/users', async ctx => {
+    .post('createUser', '/users', async (ctx) => {
       const {
-        request: { body: form }
+        request: { body: form },
       } = ctx;
       const { email } = form;
       const deletedUser = await User.scope('deleted').findOne({ where: { email } });
@@ -54,16 +54,16 @@ export default router => {
       }
     })
 
-    .put('editUser', '/users/edit', ensureAuth, async ctx => {
+    .put('editUser', '/users/edit', ensureAuth, async (ctx) => {
       const {
-        request: { body: form }
+        request: { body: form },
       } = ctx;
       const { firstName, lastName, email: newEmail } = form;
       const { id, email: oldEmail } = ctx.state.user;
       try {
         await User.update(
           { firstName, lastName, email: normalizeStr(newEmail) },
-          { where: { id } }
+          { where: { id } },
         );
         ctx.flash('info', ctx.t('flash:users.updated'));
         if (newEmail !== oldEmail) {
@@ -79,9 +79,9 @@ export default router => {
       }
     })
 
-    .patch('editUser', '/users/edit', ensureAuth, async ctx => {
+    .patch('editUser', '/users/edit', ensureAuth, async (ctx) => {
       const {
-        request: { body: form }
+        request: { body: form },
       } = ctx;
       const { oldPassword, newPassword, confirmPassword } = form;
       const { passwordDigest, id } = ctx.state.user;
@@ -89,13 +89,13 @@ export default router => {
       if (encrypt(oldPassword) !== passwordDigest) {
         errors.push({
           path: 'oldPassword',
-          message: ctx.t('errors:users.password')
+          message: ctx.t('errors:users.password'),
         });
       }
       if (newPassword !== confirmPassword) {
         errors.push({
           path: 'confirmPassword',
-          message: ctx.t('errors:users.passwordConfirmation')
+          message: ctx.t('errors:users.passwordConfirmation'),
         });
       }
       if (!_.isEmpty(errors)) {
@@ -114,7 +114,7 @@ export default router => {
       }
     })
 
-    .delete('editUser', '/users/edit', ensureAuth, async ctx => {
+    .delete('editUser', '/users/edit', ensureAuth, async (ctx) => {
       const { user } = ctx.state;
       await user.softDelete();
       await user.setAssignedTasks([]);
