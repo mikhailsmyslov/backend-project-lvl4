@@ -1,7 +1,7 @@
 import buildFormObj from '../../lib/formObjectBuilder';
 import ensureAuth from '../../lib/ensureAuth';
 import normalizeStr from '../../lib/normalizeStr';
-import { Status } from '../../db/models';
+import { Status, Sequelize } from '../../db/models';
 
 const ensureEditable = async (ctx, next) => {
   const { id } = ctx.params;
@@ -63,8 +63,17 @@ export default (router) => {
 
     .delete('deleteStatus', '/statuses/:id', ensureEditable, async (ctx) => {
       const { id } = ctx.params;
-      await Status.destroy({ where: { id } });
-      ctx.flash('info', ctx.t('flash:statuses.deleted'));
-      ctx.redirect(router.url('statuses'));
+      try {
+        await Status.destroy({ where: { id } });
+        ctx.flash('info', ctx.t('flash:statuses.deleted'));
+        ctx.redirect(router.url('statuses'));
+      } catch (err) {
+        console.error(err);
+        const message = err instanceof Sequelize.ForeignKeyConstraintError
+          ? ctx.t('flash:statuses.unableToDelete')
+          : ctx.t('flash:statuses.somethingWentWrong');
+        ctx.flash('warning', message);
+        ctx.redirect('back');
+      }
     });
 };

@@ -13,5 +13,5 @@
     "submit": "Submit",
     "search": "Search",
     "clear": "Clear",
-    "formatDate": "{{date, DD-MM-YYYY}}"
+    "formatDate": "{{date, MM-DD-YYYY}}"
 }

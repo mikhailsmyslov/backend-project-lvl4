@@ -115,12 +115,18 @@ export default (router) => {
     })
 
     .delete('editUser', '/users/edit', ensureAuth, async (ctx) => {
-      const { user } = ctx.state;
-      await user.softDelete();
-      await user.setAssignedTasks([]);
-      await user.save();
-      ctx.flash('info', ctx.t('flash:users.deleted'));
-      ctx.logout();
-      ctx.redirect(router.url('root'));
+      try {
+        const { user } = ctx.state;
+        await user.softDelete();
+        await user.setAssignedTasks([]);
+        await user.save();
+        ctx.flash('info', ctx.t('flash:users.deleted'));
+        ctx.logout();
+        ctx.redirect(router.url('root'));
+      } catch (err) {
+        console.error(err);
+        ctx.flash('warning', ctx.t('flash:somethingWentWrong'));
+        ctx.redirect('back');
+      }
     });
 };

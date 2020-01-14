@@ -38,8 +38,9 @@ const getFilteredData = async (ctx) => {
   const filters = buildFormObj({
     statusId, creatorId, assigneeId, tagId,
   });
+  const resetUrl = ctx.path;
   return {
-    users, statuses, tasks, tags, filters, query,
+    users, statuses, tasks, tags, filters, query, resetUrl,
   };
 };
 
@@ -87,9 +88,11 @@ export default (router) => {
         ctx.redirect(router.url('editTask', task.id, { query }));
       } catch (error) {
         const formObj = buildFormObj(form, error);
+        const filteredData = await getFilteredData(ctx);
         await ctx.render('tasks/new', {
           formObj,
           creator: ctx.state.user,
+          ...filteredData,
         });
       }
     })
@@ -113,15 +116,22 @@ export default (router) => {
         ctx.redirect(router.url('editTask', task.id, { query }));
       } catch (error) {
         const formObj = buildFormObj({ ...task.dataValues, ...form }, error);
+        const filteredData = await getFilteredData(ctx);
         const creator = await task.getCreator();
-        await ctx.render('tasks/edit', { formObj, creator, selectedTaskId: Number(id) });
+        await ctx.render('tasks/edit', { formObj, creator, ...filteredData });
       }
     })
 
     .delete('deleteTask', '/tasks/:id', async (ctx) => {
       const { id } = ctx.params;
-      await Task.destroy({ where: { id } });
-      ctx.flash('info', ctx.t('flash:tasks.deleted'));
-      ctx.redirect(router.url('tasks', ctx.request.query));
+      try {
+        await Task.destroy({ where: { id } });
+        ctx.flash('info', ctx.t('flash:tasks.deleted'));
+        ctx.redirect(router.url('tasks', ctx.request.query));
+      } catch (err) {
+        console.error(err);
+        ctx.flash('warning', ctx.t('flash:somethingWentWrong'));
+        ctx.redirect('back');
+      }
     });
 };

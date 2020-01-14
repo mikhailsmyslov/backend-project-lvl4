@@ -3,7 +3,8 @@
         "defaultStatusModifiactionForbidden": "Defaut statuses can not be edited or updated",
         "created": "Status has been created",
         "updated": "Status has been updated",
-        "deleted": "Status has been deleted"
+        "deleted": "Status has been deleted",
+        "unableToDelete": "Unable to delete status as there are some tasks binded to it. Please, change statuses of related tasks first and try again."
     },
     "users": {
         "created": "Account has been successfuly created",
@@ -21,5 +22,6 @@
         "success": "Successfuly signed in",
         "failure": "Invalid email or password",
         "logInFirst": "Please, Log In first"
-    }
+    },
+    "somethingWentWrong": "Oops, something went wrong. Please, try again later. If it happens again - write to the suppor."
 }

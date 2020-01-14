@@ -7,7 +7,7 @@
     "on": "Дата",
     "duration": "Длительность",
     "created": "Создана", 
-    "formatDate": "{{date, DD-MM-YYYY}}",
+    "formatDate": "{{date, MM-DD-YYYY}}",
     "newTask": "Новая задача",
     "taskDetails": "О задаче",
     "filters": {

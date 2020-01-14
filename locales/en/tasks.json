@@ -7,7 +7,7 @@
     "on": "On",
     "duration": "Duration",
     "created": "Created", 
-    "formatDate": "{{date, DD-MM-YYYY}}",
+    "formatDate": "{{date, MM-DD-YYYY}}",
     "newTask": "New Task",
     "taskDetails": "Task Details",
     "filters": {
