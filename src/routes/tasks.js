@@ -5,12 +5,10 @@ import {
 } from '../../db/models';
 import buildFormObj from '../../lib/formObjectBuilder';
 
-const defaultFilters = {
-  creatorId: 'all',
-  assigneeId: 'all',
-  statusId: 'active',
-  tagId: 'all',
-};
+const defaultCreatorId = 'all';
+const defaultAssigneeId = 'all';
+const defaultStatusId = 'active';
+const defaultTagId = 'all';
 
 const getTagsInstances = async (tagsString) => {
   if (!tagsString) return [];
@@ -23,8 +21,11 @@ const getFilteredData = async (ctx) => {
   const { query } = ctx.request;
   const { user } = ctx.state;
   const {
-    creatorId, assigneeId, statusId, tagId,
-  } = { ...defaultFilters, ...query };
+    creatorId = defaultCreatorId,
+    assigneeId = defaultAssigneeId,
+    statusId = defaultStatusId,
+    tagId = defaultTagId,
+  } = query;
   const tasks = await Task.scope(
     { method: ['byStatus', statusId] },
     { method: ['byCreator', creatorId === 'me' ? user.id : creatorId] },
@@ -54,7 +55,7 @@ export default (router) => {
     })
 
     .get('newTask', '/tasks/new', async (ctx) => {
-      const formObj = buildFormObj({ statusId: defaultFilters.statusId });
+      const formObj = buildFormObj({ statusId: defaultStatusId });
       const filteredData = await getFilteredData(ctx);
       await ctx.render('tasks/new', { formObj, creator: ctx.state.user, ...filteredData });
     })
