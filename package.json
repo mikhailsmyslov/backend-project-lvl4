@@ -79,7 +79,7 @@
     "i": "^0.3.6",
     "i18next": "^19.0.2",
     "i18next-sync-fs-backend": "^1.1.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-ujs": "^1.2.2",
     "katwekibsletteravatar": "git+https://github.com/mikhailsmyslov/katweKibsLetterAvatar.git",
     "koa": "^2.8.1",
