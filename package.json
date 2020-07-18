@@ -93,7 +93,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.3",
     "koa-static": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "npm": "^6.13.4",
     "passport-local": "^1.0.0",
